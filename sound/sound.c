@@ -5,8 +5,8 @@
 #include "shared.h"
 
 snd_t snd;
-static int16 **fm_buffer;
-static int16 **psg_buffer;
+static int16_t **fm_buffer;
+static int16_t **psg_buffer;
 int *smptab;
 int smptab_len;
 int sound_justChange = 0;
@@ -19,7 +19,7 @@ int sound_change()		{
 
 int sound_init(void)
 {
-    uint8 *buf = NULL;
+    uint8_t *buf = NULL;
     int restore_fm = 0;
     int i;
 
@@ -92,8 +92,8 @@ int sound_init(void)
 		}
 
 		/* Set up buffer pointers */
-		fm_buffer = (int16 **)&snd.stream[STREAM_FM_MO];
-		psg_buffer = (int16 **)&snd.stream[STREAM_PSG_L];
+		fm_buffer = (int16_t **)&snd.stream[STREAM_FM_MO];
+		psg_buffer = (int16_t **)&snd.stream[STREAM_PSG_L];
 
 		/* Set up SN76489 emulation */
 		SN76489_Init(0, snd.psg_clock, snd.sample_rate);
@@ -165,7 +165,7 @@ void sound_reset(void)
 
 void sound_update(int line)
 {
-    int16 *fm[2], *psg[2];
+    int16_t *fm[2], *psg[2];
 	
     if(!snd.enabled)
         return;
@@ -252,8 +252,8 @@ void mix(u16 *out, u16 *psg0, u16 *psg1, int length)		{
 
 void sound_update_ex(void *outBuffer, int sampleCount)
 {
-    int16 *psg[2];
-	int16 *temp_buf;
+    int16_t *psg[2];
+	int16_t *temp_buf;
 	
     if(!snd.enabled)
         return;
@@ -279,7 +279,7 @@ void sound_update_ex(void *outBuffer, int sampleCount)
 
 
 /* Generic FM+PSG stereo mixer callback */
-void sound_mixer_callback(int16 **stream, int16 *output, int length)
+void sound_mixer_callback(int16_t **stream, int16_t *output, int length)
 {
     int i, j = 0;
     for(i = 0; i < length; i++)

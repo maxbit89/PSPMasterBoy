@@ -8,7 +8,7 @@
 void system_save_state(VIRTUAL_FILE *fd)
 {
     char *id = STATE_HEADER;
-    uint16 version = STATE_VERSION;
+    uint16_t version = STATE_VERSION;
 
     /* Write header */
     VirtualFileWrite(id, sizeof(id), 1, fd);
@@ -41,9 +41,9 @@ void system_save_state(VIRTUAL_FILE *fd)
 void system_load_state(VIRTUAL_FILE *fd)
 {
     int i;
-    uint8 *buf;
+    uint8_t *buf;
     char id[4];
-    uint16 version;
+    uint16_t version;
 
     /* Initialize everything */
     z80_reset(0);

@@ -10,7 +10,7 @@ extern uLong sram_crc;
 char game_name[PATH_MAX];
 
 typedef struct {
-    uint32 crc;
+    uint32_t crc;
 	int mode;
     int mapper;
     int display;

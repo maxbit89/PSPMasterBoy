@@ -36,29 +36,6 @@
 extern "C" {
 #endif /* #ifdef __cplusplus */
 
-/* compiler dependence */
-#ifndef OSD_CPU_H
-#define OSD_CPU_H
-#ifndef UINT8
-typedef unsigned char	UINT8;   /* unsigned  8bit */
-#endif
-#ifndef UINT16
-typedef unsigned short	UINT16;  /* unsigned 16bit */
-#endif
-#ifndef UINT32
-typedef unsigned int	UINT32;  /* unsigned 32bit */
-#endif
-#ifndef INT8
-typedef signed char		INT8;    /* signed  8bit   */
-#endif
-#ifndef INT16
-typedef signed short	INT16;   /* signed 16bit   */
-#endif
-#ifndef INT32
-typedef signed int		INT32;   /* signed 32bit   */
-#endif
-#endif
-
 #ifndef INLINE
 #if defined(_MSC_VER)
 #define INLINE static __forceinline
@@ -73,7 +50,7 @@ typedef signed int		INT32;   /* signed 32bit   */
 #define SAMPLE_BITS 16
 
 #if (SAMPLE_BITS==16)
-	typedef INT16 SAMP;
+	typedef int16_t SAMP;
 #endif
 #if (SAMPLE_BITS==8)
 	typedef signed char SAMP;
@@ -101,7 +78,7 @@ void YM2151ResetChip(int num);
 ** '**buffers' is table of pointers to the buffers: left and right
 ** 'length' is the number of samples that should be generated
 */
-void YM2151UpdateOne(int num, INT16 **buffers, int length);
+void YM2151UpdateOne(int num, int16_t **buffers, int length);
 
 /* write 'v' to register 'r' on YM2151 chip number 'n'*/
 void YM2151WriteReg(int n, int r, int v);

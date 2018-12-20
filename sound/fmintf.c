@@ -62,7 +62,7 @@ void FM_Reset(void)
 }
 
 
-void FM_Update(int16 **buffer, int length)
+void FM_Update(int16_t **buffer, int length)
 {
     switch(snd.fm_which)
     {
@@ -102,15 +102,15 @@ void FM_Write(int offset, int data)
 }
 
 
-void FM_GetContext(uint8 *data)
+void FM_GetContext(uint8_t *data)
 {
     memcpy(data, &fm_context, sizeof(FM_Context));
 }
 
-void FM_SetContext(uint8 *data)
+void FM_SetContext(uint8_t *data)
 {
     int i;
-    uint8 *reg = fm_context.reg;
+    uint8_t *reg = fm_context.reg;
 
     memcpy(&fm_context, data, sizeof(FM_Context));
 
@@ -154,7 +154,7 @@ int FM_GetContextSize(void)
     return sizeof(FM_Context);
 }
 
-uint8 *FM_GetContextPtr(void)
+uint8_t *FM_GetContextPtr(void)
 {
-    return (uint8 *)&fm_context;
+    return (uint8_t *)&fm_context;
 }

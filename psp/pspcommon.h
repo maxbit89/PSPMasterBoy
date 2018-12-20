@@ -12,6 +12,6 @@
 #include "gz.h"
 #include "VirtualGz.h"
 #include "PspSound.h"
-#include "usb.h"
+#include <oslib/usb.h>
 
 #endif

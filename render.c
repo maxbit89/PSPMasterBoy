@@ -5,7 +5,7 @@
 
 #include "shared.h"
 
-static const uint8 tms_palette[16][3] = {
+static const uint8_t tms_palette[16][3] = {
     {   0,   0,   0}, /* Transparent */
     {   0,   0,   0}, /* Black */
     {  33, 200,  66}, 
@@ -37,33 +37,33 @@ void set_tms_palette(void)
     bitmap.pal.update = 1;
 }
 
-static uint8 sms_cram_expand_table[4];
-static uint8 gg_cram_expand_table[16];
+static uint8_t sms_cram_expand_table[4];
+static uint8_t gg_cram_expand_table[16];
 
 /* Background drawing function */
 void (*render_bg)(int line);
 void (*render_obj)(int line);
 
 /* Pointer to output buffer */
-uint8 *linebuf;
+uint8_t *linebuf;
 
 /* Internal buffer for drawing non 8-bit displays */
-uint8 internal_buffer[0x100];
+uint8_t internal_buffer[0x100];
 
 /* Precalculated pixel table */
-uint16 pixel[PALETTE_SIZE];
+uint16_t pixel[PALETTE_SIZE];
 
 /* Dirty pattern info */
-uint8 bg_name_dirty[0x200];     /* 1= This pattern is dirty */
-uint16 bg_name_list[0x200];     /* List of modified pattern indices */
-uint16 bg_list_index;           /* # of modified patterns in list */
-uint8 bg_pattern_cache[0x20000];/* Cached and flipped patterns */
+uint8_t bg_name_dirty[0x200];     /* 1= This pattern is dirty */
+uint16_t bg_name_list[0x200];     /* List of modified pattern indices */
+uint16_t bg_list_index;           /* # of modified patterns in list */
+uint8_t bg_pattern_cache[0x20000];/* Cached and flipped patterns */
 
 /* Pixel look-up table */
-uint8 lut[0x10000];
+uint8_t lut[0x10000];
 
 /* Attribute expansion table */
-static const uint32 atex[4] =
+static const uint32_t atex[4] =
 {
     0x00000000,
     0x10101010,
@@ -72,56 +72,56 @@ static const uint32 atex[4] =
 };
 
 /* Bitplane to packed pixel LUT */
-uint32 bp_lut[0x10000];
+uint32_t bp_lut[0x10000];
 
 /* Macros to access memory 32-bits at a time (from MAME's drawgfx.c) */
 
 #ifdef ALIGN_DWORD
 
-static __inline__ uint32 read_dword(void *address)
+static __inline__ uint32_t read_dword(void *address)
 {
-    if ((uint32)address & 3)
+    if ((uint32_t)address & 3)
 	{
 #ifdef LSB_FIRST  /* little endian version */
-        return ( *((uint8 *)address) +
-                (*((uint8 *)address+1) << 8)  +
-                (*((uint8 *)address+2) << 16) +
-                (*((uint8 *)address+3) << 24) );
+        return ( *((uint8_t *)address) +
+                (*((uint8_t *)address+1) << 8)  +
+                (*((uint8_t *)address+2) << 16) +
+                (*((uint8_t *)address+3) << 24) );
 #else             /* big endian version */
-        return ( *((uint8 *)address+3) +
-                (*((uint8 *)address+2) << 8)  +
-                (*((uint8 *)address+1) << 16) +
-                (*((uint8 *)address)   << 24) );
+        return ( *((uint8_t *)address+3) +
+                (*((uint8_t *)address+2) << 8)  +
+                (*((uint8_t *)address+1) << 16) +
+                (*((uint8_t *)address)   << 24) );
 #endif
 	}
 	else
-        return *(uint32 *)address;
+        return *(uint32_t *)address;
 }
 
 
-static __inline__ void write_dword(void *address, uint32 data)
+static __inline__ void write_dword(void *address, uint32_t data)
 {
-    if ((uint32)address & 3)
+    if ((uint32_t)address & 3)
 	{
 #ifdef LSB_FIRST
-            *((uint8 *)address) =    data;
-            *((uint8 *)address+1) = (data >> 8);
-            *((uint8 *)address+2) = (data >> 16);
-            *((uint8 *)address+3) = (data >> 24);
+            *((uint8_t *)address) =    data;
+            *((uint8_t *)address+1) = (data >> 8);
+            *((uint8_t *)address+2) = (data >> 16);
+            *((uint8_t *)address+3) = (data >> 24);
 #else
-            *((uint8 *)address+3) =  data;
-            *((uint8 *)address+2) = (data >> 8);
-            *((uint8 *)address+1) = (data >> 16);
-            *((uint8 *)address)   = (data >> 24);
+            *((uint8_t *)address+3) =  data;
+            *((uint8_t *)address+2) = (data >> 8);
+            *((uint8_t *)address+1) = (data >> 16);
+            *((uint8_t *)address)   = (data >> 24);
 #endif
 		return;
   	}
   	else
-        *(uint32 *)address = data;
+        *(uint32_t *)address = data;
 }
 #else
-#define read_dword(address) *(uint32 *)address
-#define write_dword(address,data) *(uint32 *)address=data
+#define read_dword(address) *(uint32_t *)address
+#define write_dword(address,data) *(uint32_t *)address=data
 #endif
 
 
@@ -215,11 +215,11 @@ void render_init(void)
     for(j = 0; j < 0x100; j++)
     {
         int x;
-        uint32 out = 0;
+        uint32_t out = 0;
         for(x = 0; x < 8; x++)
         {
-            out |= (j & (0x80 >> x)) ? (uint32)(8 << (x << 2)) : 0;
-            out |= (i & (0x80 >> x)) ? (uint32)(4 << (x << 2)) : 0;
+            out |= (j & (0x80 >> x)) ? (uint32_t)(8 << (x << 2)) : 0;
+            out |= (i & (0x80 >> x)) ? (uint32_t)(4 << (x << 2)) : 0;
         }
 #if LSB_FIRST
         bp_lut[(j << 8) | (i)] = out;
@@ -230,13 +230,13 @@ void render_init(void)
 
     for(i = 0; i < 4; i++)
     {
-        uint8 c = i << 6 | i << 4 | i << 2 | i;
+        uint8_t c = i << 6 | i << 4 | i << 2 | i;
         sms_cram_expand_table[i] = c;
     }
 
     for(i = 0; i < 16; i++)
     {
-        uint8 c = i << 4 | i;
+        uint8_t c = i << 4 | i;
         gg_cram_expand_table[i] = c;        
     }
 
@@ -331,13 +331,13 @@ void render_bg_sms(int line)
     int v_row  = (v_line & 7) << 3;
     int hscroll = ((vdp.reg[0] & 0x40) && (line < 0x10)) ? 0 : (0x100 - vdp.reg[8]);
     int column = 0;
-    uint16 attr;
-    uint16 *nt = (uint16 *)&vdp.vram[vdp.ntab + ((v_line >> 3) << 6)];
+    uint16_t attr;
+    uint16_t *nt = (uint16_t *)&vdp.vram[vdp.ntab + ((v_line >> 3) << 6)];
     int nt_scroll = (hscroll >> 3);
     int shift = (hscroll & 7);
-    uint32 atex_mask;
-    uint32 *cache_ptr;
-    uint32 *linebuf_ptr = (uint32 *)&linebuf[0 - shift];
+    uint32_t atex_mask;
+    uint32_t *cache_ptr;
+    uint32_t *linebuf_ptr = (uint32_t *)&linebuf[0 - shift];
 
     /* Draw first column (clipped) */
     if(shift)
@@ -358,7 +358,7 @@ void render_bg_sms(int line)
         {
             locked = 1;
             v_row = (line & 7) << 3;
-            nt = (uint16 *)&vdp.vram[((vdp.reg[2] << 10) & 0x3800) + ((line >> 3) << 6)];
+            nt = (uint16_t *)&vdp.vram[((vdp.reg[2] << 10) & 0x3800) + ((line >> 3) << 6)];
         }
 
         /* Get name table attribute word */
@@ -371,7 +371,7 @@ void render_bg_sms(int line)
         atex_mask = atex[(attr >> 11) & 3];
 
         /* Point to a line of pattern data in cache */
-        cache_ptr = (uint32 *)&bg_pattern_cache[((attr & 0x7FF) << 6) | (v_row)];
+        cache_ptr = (uint32_t *)&bg_pattern_cache[((attr & 0x7FF) << 6) | (v_row)];
         
         /* Copy the left half, adding the attribute bits in */
         write_dword( &linebuf_ptr[(column << 1)] , read_dword( &cache_ptr[0] ) | (atex_mask));
@@ -385,7 +385,7 @@ void render_bg_sms(int line)
     {
         int x, c, a;
 
-        uint8 *p = &linebuf[(0 - shift)+(column << 3)];
+        uint8_t *p = &linebuf[(0 - shift)+(column << 3)];
 
         attr = nt[(column + nt_scroll) & 0x1F];
 
@@ -409,7 +409,7 @@ void render_bg_sms(int line)
 void render_obj_sms_nospritelimit(int line)
 {
     int i;
-    uint8 collision_buffer = 0;
+    uint8_t collision_buffer = 0;
 
     /* Sprite count for current line (8 max.) */
 //    int count = 0;
@@ -419,7 +419,7 @@ void render_obj_sms_nospritelimit(int line)
     int height = (vdp.reg[1] & 0x02) ? 16 : 8;
 
     /* Pointer to sprite attribute table */
-    uint8 *st = (uint8 *)&vdp.vram[vdp.satb];
+    uint8_t *st = (uint8_t *)&vdp.vram[vdp.satb];
 
     /* Adjust dimensions for double size sprites */
     if(vdp.reg[1] & 0x01)
@@ -447,7 +447,7 @@ void render_obj_sms_nospritelimit(int line)
         /* Check if sprite falls on current line */
         if((line >= yp) && (line < (yp + height)))
         {
-            uint8 *linebuf_ptr;
+            uint8_t *linebuf_ptr;
 
             /* Width of sprite */
             int start = 0;
@@ -479,7 +479,7 @@ void render_obj_sms_nospritelimit(int line)
             if(vdp.reg[1] & 0x02) n &= 0x01FE;
 
             /* Point to offset in line buffer */
-            linebuf_ptr = (uint8 *)&linebuf[xp];
+            linebuf_ptr = (uint8_t *)&linebuf[xp];
 
             /* Clip sprites on left edge */
             if(xp < 0)
@@ -497,19 +497,19 @@ void render_obj_sms_nospritelimit(int line)
             if(vdp.reg[1] & 0x01)
             {
                 int x;
-                uint8 *cache_ptr = (uint8 *)&bg_pattern_cache[(n << 6) | (((line - yp) >> 1) << 3)];
+                uint8_t *cache_ptr = (uint8_t *)&bg_pattern_cache[(n << 6) | (((line - yp) >> 1) << 3)];
 
                 /* Draw sprite line */
                 for(x = start; x < end; x++)
                 {
                     /* Source pixel from cache */
-                    uint8 sp = cache_ptr[(x >> 1)];
+                    uint8_t sp = cache_ptr[(x >> 1)];
     
                     /* Only draw opaque sprite pixels */
                     if(sp)
                     {
                         /* Background pixel from line buffer */
-                        uint8 bg = linebuf_ptr[x];
+                        uint8_t bg = linebuf_ptr[x];
     
                         /* Look up result */
                         linebuf_ptr[x] = lut[(bg << 8) | (sp)];
@@ -522,19 +522,19 @@ void render_obj_sms_nospritelimit(int line)
             else /* Regular size sprite (8x8 / 8x16) */
             {
                 int x;
-                uint8 *cache_ptr = (uint8 *)&bg_pattern_cache[(n << 6) | ((line - yp) << 3)];
+                uint8_t *cache_ptr = (uint8_t *)&bg_pattern_cache[(n << 6) | ((line - yp) << 3)];
 
                 /* Draw sprite line */
                 for(x = start; x < end; x++)
                 {
                     /* Source pixel from cache */
-                    uint8 sp = cache_ptr[x];
+                    uint8_t sp = cache_ptr[x];
     
                     /* Only draw opaque sprite pixels */
                     if(sp)
                     {
                         /* Background pixel from line buffer */
-                        uint8 bg = linebuf_ptr[x];
+                        uint8_t bg = linebuf_ptr[x];
     
                         /* Look up result */
                         linebuf_ptr[x] = lut[(bg << 8) | (sp)];
@@ -556,7 +556,7 @@ end:
 void render_obj_sms(int line)
 {
     int i;
-    uint8 collision_buffer = 0;
+    uint8_t collision_buffer = 0;
 
     /* Sprite count for current line (8 max.) */
     int count = 0;
@@ -566,7 +566,7 @@ void render_obj_sms(int line)
     int height = (vdp.reg[1] & 0x02) ? 16 : 8;
 
     /* Pointer to sprite attribute table */
-    uint8 *st = (uint8 *)&vdp.vram[vdp.satb];
+    uint8_t *st = (uint8_t *)&vdp.vram[vdp.satb];
 
     /* Adjust dimensions for double size sprites */
     if(vdp.reg[1] & 0x01)
@@ -594,7 +594,7 @@ void render_obj_sms(int line)
         /* Check if sprite falls on current line */
         if((line >= yp) && (line < (yp + height)))
         {
-            uint8 *linebuf_ptr;
+            uint8_t *linebuf_ptr;
 
             /* Width of sprite */
             int start = 0;
@@ -626,7 +626,7 @@ void render_obj_sms(int line)
             if(vdp.reg[1] & 0x02) n &= 0x01FE;
 
             /* Point to offset in line buffer */
-            linebuf_ptr = (uint8 *)&linebuf[xp];
+            linebuf_ptr = (uint8_t *)&linebuf[xp];
 
             /* Clip sprites on left edge */
             if(xp < 0)
@@ -644,19 +644,19 @@ void render_obj_sms(int line)
             if(vdp.reg[1] & 0x01)
             {
                 int x;
-                uint8 *cache_ptr = (uint8 *)&bg_pattern_cache[(n << 6) | (((line - yp) >> 1) << 3)];
+                uint8_t *cache_ptr = (uint8_t *)&bg_pattern_cache[(n << 6) | (((line - yp) >> 1) << 3)];
 
                 /* Draw sprite line */
                 for(x = start; x < end; x++)
                 {
                     /* Source pixel from cache */
-                    uint8 sp = cache_ptr[(x >> 1)];
+                    uint8_t sp = cache_ptr[(x >> 1)];
     
                     /* Only draw opaque sprite pixels */
                     if(sp)
                     {
                         /* Background pixel from line buffer */
-                        uint8 bg = linebuf_ptr[x];
+                        uint8_t bg = linebuf_ptr[x];
     
                         /* Look up result */
                         linebuf_ptr[x] = lut[(bg << 8) | (sp)];
@@ -669,19 +669,19 @@ void render_obj_sms(int line)
             else /* Regular size sprite (8x8 / 8x16) */
             {
                 int x;
-                uint8 *cache_ptr = (uint8 *)&bg_pattern_cache[(n << 6) | ((line - yp) << 3)];
+                uint8_t *cache_ptr = (uint8_t *)&bg_pattern_cache[(n << 6) | ((line - yp) << 3)];
 
                 /* Draw sprite line */
                 for(x = start; x < end; x++)
                 {
                     /* Source pixel from cache */
-                    uint8 sp = cache_ptr[x];
+                    uint8_t sp = cache_ptr[x];
     
                     /* Only draw opaque sprite pixels */
                     if(sp)
                     {
                         /* Background pixel from line buffer */
-                        uint8 bg = linebuf_ptr[x];
+                        uint8_t bg = linebuf_ptr[x];
     
                         /* Look up result */
                         linebuf_ptr[x] = lut[(bg << 8) | (sp)];
@@ -703,8 +703,8 @@ end:
 void update_bg_pattern_cache(void)
 {
     int i;
-    uint8 x, y;
-    uint16 name;
+    uint8_t x, y;
+    uint16_t name;
 	int yLookup1;
 	int yLookup2;
 
@@ -722,15 +722,15 @@ void update_bg_pattern_cache(void)
 
             if(bg_name_dirty[name] & (1 << y))
             {
-                uint8 *dst = &bg_pattern_cache[name << 6];
+                uint8_t *dst = &bg_pattern_cache[name << 6];
 
-                uint16 bp01 = *(uint16 *)&vdp.vram[(name << 5) | (y << 2) | (0)];
-                uint16 bp23 = *(uint16 *)&vdp.vram[(name << 5) | (y << 2) | (2)];
-                uint32 temp = (bp_lut[bp01] >> 2) | (bp_lut[bp23]);
+                uint16_t bp01 = *(uint16_t *)&vdp.vram[(name << 5) | (y << 2) | (0)];
+                uint16_t bp23 = *(uint16_t *)&vdp.vram[(name << 5) | (y << 2) | (2)];
+                uint32_t temp = (bp_lut[bp01] >> 2) | (bp_lut[bp23]);
 
                 for(x = 0; x < 8; x++)
                 {
-                    uint8 c = (temp >> (x << 2)) & 0x0F;
+                    uint8_t c = (temp >> (x << 2)) & 0x0F;
                     dst[0x00000 | yLookup1 | (x)] = (c);
                     dst[0x08000 | yLookup1 | (x ^ 7)] = (c);
                     dst[0x10000 | yLookup2 | (x)] = (c);
@@ -784,7 +784,7 @@ void palette_sync(int index)
 void remap_8_to_16(int line)
 {
     int i;
-    uint16 *p = (uint16 *)&bitmap.data[(line * bitmap.pitch)];
+    uint16_t *p = (uint16_t *)&bitmap.data[(line * bitmap.pitch)];
     for(i = bitmap.viewport.x; i < bitmap.viewport.w + bitmap.viewport.x; i++)
     {
         p[i] = pixel[ internal_buffer[i] & PIXEL_MASK ];

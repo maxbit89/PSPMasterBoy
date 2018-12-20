@@ -97,30 +97,6 @@ void YM2612_save_state(void);
   #define YM2151UpdateReq(chip) YM2151UpdateRequest(chip);
 #endif
 
-/* compiler dependence */
-#ifndef OSD_CPU_H
-#define OSD_CPU_H
-/* James Ponder: only define these types if they don't already exist */
-#ifndef UINT8
-typedef unsigned char	UINT8;   /* unsigned  8bit */
-#endif
-#ifndef UINT16
-typedef unsigned short	UINT16;  /* unsigned 16bit */
-#endif
-#ifndef UINT32
-typedef unsigned int	UINT32;  /* unsigned 32bit */
-#endif
-#ifndef INT8
-typedef signed char		INT8;    /* signed  8bit   */
-#endif
-#ifndef INT16
-typedef signed short	INT16;   /* signed 16bit   */
-#endif
-#ifndef INT32
-typedef signed int		INT32;   /* signed 32bit   */
-#endif
-#endif
-
 #define YM2203_NUMBUF 1
 #if FM_STEREO_MIX
   #define YM2151_NUMBUF 1
@@ -135,7 +111,7 @@ typedef signed int		INT32;   /* signed 32bit   */
 #endif
 
 #if (FM_SAMPLE_BITS==16)
-typedef INT16 FMSAMPLE;
+typedef int16_t FMSAMPLE;
 typedef unsigned long FMSAMPLE_MIX;
 #endif
 #if (FM_SAMPLE_BITS==8)
@@ -242,7 +218,7 @@ int YM2612Init(int num, int baseclock, int rate,
                FM_TIMERHANDLER TimerHandler,FM_IRQHANDLER IRQHandler);
 void YM2612Shutdown(void);
 void YM2612ResetChip(int num);
-void YM2612UpdateOne(int num, INT16 **buffer, int length);
+void YM2612UpdateOne(int num, int16_t **buffer, int length);
 int YM2612Write(int n, int a,unsigned char v);
 unsigned char YM2612Read(int n,int a);
 int YM2612TimerOver(int n, int c );

@@ -16,7 +16,7 @@ char *getFileNameExtension(char *nom_fichier)		{
 	return ptrPoint;
 }
 
-uint8 *loadFromZipByName(char *archive, char *filename, int *filesize)
+uint8_t *loadFromZipByName(char *archive, char *filename, int *filesize)
 {
     char name[PATH_MAX];
     unsigned char *buffer;
@@ -114,7 +114,7 @@ uint8 *loadFromZipByName(char *archive, char *filename, int *filesize)
 */
 int check_zip(char *filename)
 {
-    uint8 buf[2];
+    uint8_t buf[2];
     FILE *fd = NULL;
     fd = fopen(filename, "rb");
     if(!fd) return (0);

@@ -19,7 +19,7 @@ typedef struct
 //	char scrBuffer[256*192*2];
 	char *scrBuffer;
 //	uint16 pal[256];
-	uint16 *pal;
+	uint16_t *pal;
 } screen_t;
 
 extern screen_t Screen, ScreenTemp;

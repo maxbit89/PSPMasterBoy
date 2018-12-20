@@ -16,7 +16,7 @@ void SmsEmulate();
 
 void SmsShutdown(void);
 
-void system_manage_sram(uint8 *sram, int slot, int mode);
+void system_manage_sram(uint8_t *sram, int slot, int mode);
 
 extern int frameReady, gblFramerate, gblVirtualFramerate;
 

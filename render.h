@@ -8,17 +8,17 @@ extern unsigned char pixel_values[256];
 //#define MAKE_PIXEL(r,g,b)   (((r << 8) & 0xF800) | ((g << 3) & 0x07E0) | ((b >> 3) & 0x001F))
 //#define MAKE_PIXEL(r,g,b) ((((b>>3) & 0x1F)<<10)|(((g>>3) & 0x1F)<<5)|(((r>>3) & 0x1F)<<0)|0x8000)
 #define MAKE_PIXEL(r,g,b) ((pixel_values[b] << 10) | (pixel_values[g] << 5) | pixel_values[r] | 0x8000)
-extern uint16 MAKE_COLOR(uint8 r, uint8 g, uint8 b);
+extern uint16_t MAKE_COLOR(uint8_t r, uint8_t g, uint8_t b);
 
 
 /* Used for blanking a line in whole or in part */
 #define BACKDROP_COLOR      (0x10 | (vdp.reg[7] & 0x0F))
 
 /* Global data */
-extern uint8 bg_name_dirty[0x200];
-extern uint16 bg_name_list[0x200];
-extern uint16 bg_list_index;
-extern uint8 bg_pattern_cache[0x20000];
+extern uint8_t bg_name_dirty[0x200];
+extern uint16_t bg_name_list[0x200];
+extern uint16_t bg_list_index;
+extern uint8_t bg_pattern_cache[0x20000];
 
 /* Function prototypes */
 void render_init(void);

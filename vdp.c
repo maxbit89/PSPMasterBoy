@@ -126,7 +126,7 @@ void viewport_check(void)
 }
 
 
-void vdp_reg_w(uint8 r, uint8 d)
+void vdp_reg_w(uint8_t r, uint8_t d)
 {
     /* Store register data */
     vdp.reg[r] = d;
@@ -167,7 +167,7 @@ void vdp_reg_w(uint8 r, uint8 d)
 }
 
 
-void vdp_write(int offset, uint8 data)
+void vdp_write(int offset, uint8_t data)
 {
     int index;
 
@@ -232,9 +232,9 @@ void vdp_write(int offset, uint8 data)
     }
 }
 
-uint8 vdp_read(int offset)
+uint8_t vdp_read(int offset)
 {
-    uint8 temp;
+    uint8_t temp;
 
     switch(offset & 1)
     {
@@ -259,7 +259,7 @@ uint8 vdp_read(int offset)
     return -1;
 }
 
-uint8 vdp_counter_r(int offset)
+uint8_t vdp_counter_r(int offset)
 {
     int pixel;
 
@@ -282,7 +282,7 @@ uint8 vdp_counter_r(int offset)
 /* Game Gear VDP handlers                                                   */
 /*--------------------------------------------------------------------------*/
 
-void gg_vdp_write(int offset, uint8 data)
+void gg_vdp_write(int offset, uint8_t data)
 {
     int index;
 
@@ -354,7 +354,7 @@ void gg_vdp_write(int offset, uint8 data)
 /* MegaDrive / Genesis VDP handlers                                         */
 /*--------------------------------------------------------------------------*/
 
-void md_vdp_write(int offset, uint8 data)
+void md_vdp_write(int offset, uint8_t data)
 {
     int index;
 

@@ -29,8 +29,8 @@ OBJS	+=    psp/VideoGu.o	\
 OBJS	+=	psp/main.o 	\
 		psp/menuplus.o \
 		psp/menuplus2.o \
-		psp/config.o \
-		psp/usb.o
+		psp/config.o
+#		psp/usb.o
 
 OBJS	+= psp/sound.o
 
@@ -64,7 +64,7 @@ BASECFLAGS = -G0 -S \
 #-fno-reorder-blocks -fno-align-functions
 
 # Note that O3 is not optimal, at least for SMS. But for GB it gives an huge improvement, so I globally enabled it; if someone can tell me how to only compile some files (i.e. those in the gbcore directory) it would be very nice, thanks :)
-CFLAGS = -O3 $(BASECFLAGS)
+CFLAGS = -O0 $(BASECFLAGS)
 CXXFLAGS = -g $(CFLAGS) -fno-exceptions -fno-rtti -Wpointer-arith
 ASFLAGS = -c $(CFLAGS) 
 

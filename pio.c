@@ -71,15 +71,15 @@ void system_assign_device(int port, int type)
     sms.device[port].type = type;
 }
 
-void ioctrl_w(uint8 data)
+void ioctrl_w(uint8_t data)
 {
     sms.ioctrl = data;
     io_current = &io_lut[sms.territory][data];
 }
 
-uint8 device_r(int offset)
+uint8_t device_r(int offset)
 {
-    uint8 temp = 0x7F;
+    uint8_t temp = 0x7F;
 
     switch(sms.device[offset].type)
     {
@@ -94,9 +94,9 @@ uint8 device_r(int offset)
     return temp;
 }
 
-uint8 input_r(int offset)
+uint8_t input_r(int offset)
 {
-    uint8 temp = 0xFF;
+    uint8_t temp = 0xFF;
 
     /*
         If I/O chip is disabled, reads return last byte of instruction that
@@ -119,7 +119,7 @@ uint8 input_r(int offset)
 
         if(sms.console == CONSOLE_GG)
         {
-            uint8 state = sio_r(0x01);
+            uint8_t state = sio_r(0x01);
             temp = (temp & 0x3F) | (state & 0x03) << 6; /* Insert D1,D0 */
         }
         else
@@ -139,7 +139,7 @@ uint8 input_r(int offset)
         /* Input port #1 */
         if(sms.console == CONSOLE_GG)
         {
-            uint8 state = sio_r(0x01);
+            uint8_t state = sio_r(0x01);
             temp = (temp & 0xF0) | ((state & 0x3C) >> 2); /* Insert TR,TL,D3,D2 */
             temp = (temp & 0x7F) | ((state & 0x40) << 1); /* Insert TH */
         }
@@ -178,9 +178,9 @@ uint8 input_r(int offset)
     return temp;
 }
 
-uint8 sio_r(int offset)
+uint8_t sio_r(int offset)
 {
-    uint8 temp;
+    uint8_t temp;
 
     switch(offset & 0xFF)
     {

@@ -1,3 +1,6 @@
+#ifndef USB_H
+#define USB_H
+#include <oslib/usb.h>
 #include <pspusb.h>
 #include <pspusbstor.h>
 #include <pspsdk.h>
@@ -10,3 +13,5 @@ extern int oslInitUsbStorage();
 extern void oslStartUsbStorage();
 extern void oslStopUsbStorage();
 extern int oslDeinitUsbStorage();
+
+#endif

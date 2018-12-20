@@ -25,29 +25,16 @@
 #ifndef OSD_CPU_H
 #define OSD_CPU_H
 
-#ifndef DOS
-#include "basetsd.h"
-#endif
-
-typedef unsigned char						UINT8;
-typedef unsigned short						UINT16;
-#ifdef DOS
-typedef unsigned int                        UINT32;
-__extension__ typedef unsigned long long    UINT64;
-#endif
-typedef signed char 						INT8;
-typedef signed short						INT16;
-#ifdef DOS
-typedef signed int                          INT32;
-__extension__ typedef signed long long      INT64;
-#endif
+//#ifndef DOS
+//#include "basetsd.h"
+//#endif
 
 /* Combine two 32-bit integers into a 64-bit integer */
-#define COMBINE_64_32_32(A,B)     ((((UINT64)(A))<<32) | (UINT32)(B))
+#define COMBINE_64_32_32(A,B)     ((((uint64_t)(A))<<32) | (uint32_t)(B))
 #define COMBINE_U64_U32_U32(A,B)  COMBINE_64_32_32(A,B)
 
 /* Return upper 32 bits of a 64-bit integer */
-#define HI32_32_64(A)		  (((UINT64)(A)) >> 32)
+#define HI32_32_64(A)		  (((uint64_t)(A)) >> 32)
 #define HI32_U32_U64(A)		  HI32_32_64(A)
 
 /* Return lower 32 bits of a 64-bit integer */
@@ -73,13 +60,13 @@ __extension__ typedef signed long long      INT64;
  ******************************************************************************/
 typedef union {
 #ifdef LSB_FIRST
-	struct { UINT8 l,h,h2,h3; } b;
-	struct { UINT16 l,h; } w;
+	struct { uint8_t l,h,h2,h3; } b;
+	struct { uint16_t l,h; } w;
 #else
-	struct { UINT8 h3,h2,h,l; } b;
-	struct { UINT16 h,l; } w;
+	struct { uint8_t h3,h2,h,l; } b;
+	struct { uint16_t h,l; } w;
 #endif
-	UINT32 d;
+	uint32_t d;
 }	PAIR;
 
 #endif	/* defined OSD_CPU_H */

@@ -10,11 +10,11 @@ enum {
 };
 
 typedef struct x {
-    uint32 sample_count;
+    uint32_t sample_count;
     struct x *next;
-    uint8 type;
-    uint8 data;
-    uint8 filler[6];
+    uint8_t type;
+    uint8_t data;
+    uint8_t filler[6];
 } sndstk_t;
 
 void sndstk_copy(sndstk_t *src, sndstk_t *dst);

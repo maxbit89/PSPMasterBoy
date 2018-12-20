@@ -93,19 +93,19 @@ void SN76489_Config(int which, int mute, int boost, int volume, int feedback)
     p->WhiteNoiseFeedback = feedback;
 }
 
-void SN76489_SetContext(int which, uint8 *data)
+void SN76489_SetContext(int which, uint8_t *data)
 {
     memcpy(&SN76489[which], data, sizeof(SN76489_Context));
 }
 
-void SN76489_GetContext(int which, uint8 *data)
+void SN76489_GetContext(int which, uint8_t *data)
 {
     memcpy(data, &SN76489[which], sizeof(SN76489_Context));
 }
 
-uint8 *SN76489_GetContextPtr(int which)
+uint8_t *SN76489_GetContextPtr(int which)
 {
-    return (uint8 *)&SN76489[which];
+    return (uint8_t *)&SN76489[which];
 }
 
 int SN76489_GetContextSize(void)
@@ -153,7 +153,7 @@ void SN76489_GGStereoWrite(int which, int data)
     p->PSGStereo=data;
 }
 
-void SN76489_Update(int which, INT16 **buffer, int length)
+void SN76489_Update(int which, int16_t **buffer, int length)
 {
     SN76489_Context *p = &SN76489[which];
     int i, j;

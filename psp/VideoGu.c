@@ -343,7 +343,7 @@ void HSLToRGB(unsigned h, unsigned s, unsigned l,
 }
 
 
-uint16 MAKE_COLOR(uint8 r, uint8 g, uint8 b)		{
+uint16_t MAKE_COLOR(uint8_t r, uint8_t g, uint8_t b)		{
 	if (menuConfig.video.vibrance == 128)
 		return MAKE_PIXEL(r, g, b);
 	else if (menuConfig.video.vibrance > 128)			{
@@ -396,7 +396,7 @@ uint16 MAKE_COLOR(uint8 r, uint8 g, uint8 b)		{
 
 void RecolorPaletteVibrance()		{
 	unsigned h, s, l;
-	uint8 r, g, b;
+	uint8_t r, g, b;
 	int i;
 	int coeff, coeff2;
 	
@@ -437,7 +437,7 @@ void RecolorPaletteVibrance()		{
 
 void RecolorPaletteGray()		{
 	unsigned h, s, l;
-	uint8 r, g, b;
+	uint8_t r, g, b;
 	int i;
 	int coeff, value;
 	
@@ -466,7 +466,7 @@ void RecolorPaletteGray()		{
 
 //Faster, but doesn't support the vibrance control effects
 void RecolorPalette()		{
-	uint8 r, g, b;
+	uint8_t r, g, b;
 	int i;
 
 	for(i=0; i<PALETTE_SIZE; i++)

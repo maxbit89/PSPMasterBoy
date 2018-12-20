@@ -96,19 +96,19 @@ void VGM_SN76489_Config(int which, int mute, int volume, int feedback, int sr_wi
     p->BoostNoise = boost_noise;
 }
 
-void VGM_SN76489_SetContext(int which, uint8 *data)
+void VGM_SN76489_SetContext(int which, uint8_t *data)
 {
     memcpy(&SN76489[which], data, sizeof(VGM_SN76489_Context));
 }
 
-void VGM_SN76489_GetContext(int which, uint8 *data)
+void VGM_SN76489_GetContext(int which, uint8_t *data)
 {
     memcpy(data, &SN76489[which], sizeof(VGM_SN76489_Context));
 }
 
-uint8 *VGM_SN76489_GetContextPtr(int which)
+uint8_t *VGM_SN76489_GetContextPtr(int which)
 {
-    return (uint8 *)&SN76489[which];
+    return (uint8_t *)&SN76489[which];
 }
 
 int VGM_SN76489_GetContextSize(void)
@@ -156,7 +156,7 @@ void VGM_SN76489_GGStereoWrite(int which, int data)
     p->PSGStereo=data;
 }
 
-void VGM_SN76489_Update(int which, INT16 **buffer, int length)
+void VGM_SN76489_Update(int which, int16_t **buffer, int length)
 {
     VGM_SN76489_Context *p = &SN76489[which];
     int i, j;
@@ -270,8 +270,8 @@ void VGM_SN76489_Update(int which, INT16 **buffer, int length)
 
 void VGM_SN76489_UpdateOne(int which, int *l, int *r)
 {
-  INT16 tl,tr;
-  INT16 *buff[2]={&tl,&tr};
+  int16_t tl,tr;
+  int16_t *buff[2]={&tl,&tr};
   VGM_SN76489_Update(which,buff,1);
   *l=tl;
   *r=tr;
