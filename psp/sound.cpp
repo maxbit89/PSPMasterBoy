@@ -259,7 +259,7 @@ int menuPlaySoundEx(CFILE *f)		{
 		int filetype;
 		char *extension = strstr(f->name, ".");
 		if (!extension)
-			extension = "";
+			extension = (char*)"";
 		
 		//Tags par défaut
 		strcpy(menuSoundTitle, "<Title unknown>");
@@ -267,7 +267,7 @@ int menuPlaySoundEx(CFILE *f)		{
 
 		//Type GYM (Genesis YM2612)
 		if (!strcmp(extension, ".gym"))			{
-			song.set_filename("test.gym");
+			song.set_filename((char*)"test.gym");
 			if (!gymCodec)
 				gymCodec = new CODEC_GYM::input_gym;
 			else
@@ -281,7 +281,7 @@ int menuPlaySoundEx(CFILE *f)		{
 		}
 		//Type VGM (Video Game Music) ou VGZ (VGM g-zippé)
 		else if (!strcmp(extension, ".vgm"))			{
-			song.set_filename("test.vgm");
+			song.set_filename((char*)"test.vgm");
 			if (!isVgmInited)
 				VGM_Init();
 			musicThreadFrequency = menuConfig.music.frequency;
