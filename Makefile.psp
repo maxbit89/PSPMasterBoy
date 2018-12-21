@@ -29,8 +29,8 @@ OBJS	+=    psp/VideoGu.o	\
 OBJS	+=	psp/main.o 	\
 		psp/menuplus.o \
 		psp/menuplus2.o \
-		psp/config.o
-#		psp/usb.o
+		psp/config.o \
+		psp/usb.o
 
 OBJS	+= psp/sound.o
 
@@ -55,9 +55,9 @@ OBJS	+= error.o
 		psp/Adhoc/pspadhoc.o 	\
 		psp/Adhoc/stubs.o
 
-INCDIR = 
+INCDIR =
 
-BASECFLAGS = -G0 -S \
+BASECFLAGS = -G0 \
 	-I. -Icpu -Isound -Iunzip -Ipsp -DLSB_FIRST \
 	-DALIGN_DWORD -DDOS -DPSP -DUSE_ZLIB  -fno-align-functions
 #	-DALIGN_DWORD -DDOS -DPSP -DUSE_ZLIB  -fno-align-loops -fno-align-jumps -fno-align-functions -fno-align-labels -fno-reorder-blocks -fno-reorder-blocks-and-partition -fno-prefetch-loop-arrays -fno-tree-vect-loop-version -fno-tree-loop-optimize -fno-strict-aliasing
@@ -66,12 +66,12 @@ BASECFLAGS = -G0 -S \
 # Note that O3 is not optimal, at least for SMS. But for GB it gives an huge improvement, so I globally enabled it; if someone can tell me how to only compile some files (i.e. those in the gbcore directory) it would be very nice, thanks :)
 CFLAGS = -O3 $(BASECFLAGS)
 CXXFLAGS = -g $(CFLAGS) -fno-exceptions -fno-rtti -Wpointer-arith
-ASFLAGS = -c $(CFLAGS) 
+ASFLAGS = -c $(CFLAGS)
 
-LIBDIR = 
+LIBDIR =
 LDFLAGS = -Wl,-Map -Wl,MasterBoy.map
 #LDFLAGS =
-LIBS = -losl -lpng -lz \
+LIBS = -losl -lpng -lz -ljpeg \
 		-lpspsdk -lpsphprm -lpspctrl -lpspumd -lpsprtc -lpsppower -lpspusb -lpspusbstor -lpspgu -lpspaudiolib -lpspaudio -lstdc++ -lm
 
 #EXTRA_TARGETS = kxploit
@@ -109,7 +109,7 @@ system.o: system.c
 #User Interface
 main.o: main.c
 	$(CC) $(addprefix -I,$(INCDIR)) -Os $(BASECFLAGS) -c -o $@ $<
-	
+
 menuplus.o: menuplus.c
 	$(CC) $(addprefix -I,$(INCDIR)) -Os $(BASECFLAGS) -c -o $@ $<
 

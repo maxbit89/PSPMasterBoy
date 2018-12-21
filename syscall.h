@@ -62,11 +62,11 @@ void sceDisplaySetFrameBuf(char *topaddr,long linesize,long pixelsize,long);
 
 /******************************************************************************/
 /* sceCtrl */
-/* Index for the two analog directions */ 
-#define CTRL_ANALOG_X   0 
-#define CTRL_ANALOG_Y   1 
+/* Index for the two analog directions */
+#define CTRL_ANALOG_X   0
+#define CTRL_ANALOG_Y   1
 
-/* Button bit masks */ 
+/* Button bit masks */
 #define CTRL_SQUARE		0x008000
 #define CTRL_TRIANGLE	0x001000
 #define CTRL_CIRCLE		0x002000
@@ -81,16 +81,16 @@ void sceDisplaySetFrameBuf(char *topaddr,long linesize,long pixelsize,long);
 #define CTRL_RTRIGGER	0x000200
 #define CTRL_HOLD		0x020000
 
-/* Returned control data */ 
-typedef struct _ctrl_data 
-{ 
-	u32 frame; 
-	u32 buttons; 
-	u8  analog[4]; 
-	u32 unused; 
-} ctrl_data_t; 
+/* Returned control data */
+typedef struct _ctrl_data
+{
+	u32 frame;
+	u32 buttons;
+	u8  analog[4];
+	u32 unused;
+} ctrl_data_t;
 
-/* Pass 1 to enable analogue mode */ 
+/* Pass 1 to enable analogue mode */
 void sceCtrlSetSamplingMode(s32 on);
 void sceCtrlGetSamplingMode(s32 *on);
 
@@ -105,15 +105,15 @@ int sceCtrlReadBufferNegative(ctrl_data_t* paddata, int);
 /******************************************************************************/
 /* IoFileMgrForUser */
 
-#define SCE_O_RDONLY    0x0001 
-#define SCE_O_WRONLY    0x0002 
-#define SCE_O_RDWR      0x0003 
-#define SCE_O_NBLOCK    0x0010 
-#define SCE_O_APPEND    0x0100 
-#define SCE_O_CREAT     0x0200 
-#define SCE_O_TRUNC     0x0400 
-#define SCE_O_EXCL      0x0800 
-#define SCE_O_NOWAIT    0x8000 
+#define SCE_O_RDONLY    0x0001
+#define SCE_O_WRONLY    0x0002
+#define SCE_O_RDWR      0x0003
+#define SCE_O_NBLOCK    0x0010
+#define SCE_O_APPEND    0x0100
+#define SCE_O_CREAT     0x0200
+#define SCE_O_TRUNC     0x0400
+#define SCE_O_EXCL      0x0800
+#define SCE_O_NOWAIT    0x8000
 
 int sceIoOpen(const char* file, int mode, int unknown);
 int sceIoClose(int fd);
@@ -125,9 +125,9 @@ int sceIoMkdir(const char *dir, int mode);
 int sceIoRmdir(const char *dir);
 int sceIoRename(const char *oldname, const char *newname);
 
-enum { 
-	TYPE_DIR=0x10, 
-	TYPE_FILE=0x20 
+enum {
+	TYPE_DIR=0x10,
+	TYPE_FILE=0x20
 };
 
 typedef struct ScePspDateTime
@@ -153,8 +153,8 @@ typedef struct SceIoDirent
 	char name[0x108];
 }SceIoDirent;
 
-int sceIoDopen(const char *fn); 
-int sceIoDread(int fd, SceIoDirent *de); 
+int sceIoDopen(const char *fn);
+int sceIoDread(int fd, SceIoDirent *de);
 void sceIoDclose(int fd);
 int sceIoGetStat(const char *file, SceIoDirent *stat);
 int sceIoChdir(const char *path);

@@ -299,7 +299,7 @@ void FctColorIt_SetTilesetData(int type, char *ptr)		{
 				value1 -= 'a' - ('9' + 1);
 			if (value2 >= 'a' && value2 <= 'f')
 				value2 -= 'a' - ('9' + 1);
-			value1 -= '0';		
+			value1 -= '0';
 			value2 -= '0';
 
 			//Store the final value

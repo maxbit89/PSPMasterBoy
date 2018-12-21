@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
-		<cconfiguration id="com.jetdrone.minpsp.managedbuilder.toolchain.psp.base.1728465360">
-			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.jetdrone.minpsp.managedbuilder.toolchain.psp.base.1728465360" moduleId="org.eclipse.cdt.core.settings" name="Default">
+		<cconfiguration id="com.jetdrone.minpsp.managedbuilder.toolchain.psp.base.64550044">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.jetdrone.minpsp.managedbuilder.toolchain.psp.base.64550044" moduleId="org.eclipse.cdt.core.settings" name="Default">
 				<externalSettings/>
 				<extensions>
 					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
@@ -13,32 +13,23 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactName="MasterBoy" buildProperties="" description="" id="com.jetdrone.minpsp.managedbuilder.toolchain.psp.base.1728465360" name="Default" parent="org.eclipse.cdt.build.core.emptycfg">
-					<folderInfo id="com.jetdrone.minpsp.managedbuilder.toolchain.psp.base.1728465360.350167130" name="/" resourcePath="">
-						<toolChain id="com.jetdrone.minpsp.managedbuilder.toolchain.psp.base.1492963672" name="com.jetdrone.minpsp.managedbuilder.toolchain.psp.base" superClass="com.jetdrone.minpsp.managedbuilder.toolchain.psp.base">
-							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="com.jetdrone.minpsp.managedbuilder.targetplatform.psp.base.1253871798" name="Debug Platfom" superClass="com.jetdrone.minpsp.managedbuilder.targetplatform.psp.base"/>
-							<builder id="com.jetdrone.minpsp.managedbuilder.builder.psp.base.138712222" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="com.jetdrone.minpsp.managedbuilder.builder.psp.base"/>
-							<tool id="com.jetdrone.minpsp.managedbuilder.tool.c.compiler.psp.base.1006749075" name="MinPSP C Compiler" superClass="com.jetdrone.minpsp.managedbuilder.tool.c.compiler.psp.base">
-								<option id="gnu.c.compiler.option.include.paths.404549592" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;C:\pspsdk\psp\sdk\include&quot;"/>
-								</option>
-								<inputType id="com.jetdrone.minpsp.managedbuilder.compiler.c.input.259494711" superClass="com.jetdrone.minpsp.managedbuilder.compiler.c.input"/>
+				<configuration buildProperties="" description="" id="com.jetdrone.minpsp.managedbuilder.toolchain.psp.base.64550044" name="Default" parent="org.eclipse.cdt.build.core.emptycfg">
+					<folderInfo id="com.jetdrone.minpsp.managedbuilder.toolchain.psp.base.64550044.565071167" name="/" resourcePath="">
+						<toolChain id="com.jetdrone.minpsp.managedbuilder.toolchain.psp.base.1985496059" name="com.jetdrone.minpsp.managedbuilder.toolchain.psp.base" superClass="com.jetdrone.minpsp.managedbuilder.toolchain.psp.base">
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="com.jetdrone.minpsp.managedbuilder.targetplatform.psp.base.1026071537" name="Debug Platfom" superClass="com.jetdrone.minpsp.managedbuilder.targetplatform.psp.base"/>
+							<builder id="com.jetdrone.minpsp.managedbuilder.builder.psp.base.577984401" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="com.jetdrone.minpsp.managedbuilder.builder.psp.base"/>
+							<tool id="com.jetdrone.minpsp.managedbuilder.tool.c.compiler.psp.base.1583348733" name="MinPSP C Compiler" superClass="com.jetdrone.minpsp.managedbuilder.tool.c.compiler.psp.base">
+								<inputType id="com.jetdrone.minpsp.managedbuilder.compiler.c.input.658747700" superClass="com.jetdrone.minpsp.managedbuilder.compiler.c.input"/>
 							</tool>
-							<tool id="com.jetdrone.minpsp.managedbuilder.tool.cpp.compiler.psp.base.591642001" name="MinPSP C++ Compiler" superClass="com.jetdrone.minpsp.managedbuilder.tool.cpp.compiler.psp.base">
-								<option id="gnu.cpp.compiler.option.include.paths.666796383" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;C:\pspsdk\psp\sdk\include&quot;"/>
-								</option>
-								<inputType id="com.jetdrone.minpsp.managedbuilder.compiler.cpp.input.1074522404" superClass="com.jetdrone.minpsp.managedbuilder.compiler.cpp.input"/>
+							<tool id="com.jetdrone.minpsp.managedbuilder.tool.cpp.compiler.psp.base.1252856428" name="MinPSP C++ Compiler" superClass="com.jetdrone.minpsp.managedbuilder.tool.cpp.compiler.psp.base">
+								<inputType id="com.jetdrone.minpsp.managedbuilder.compiler.cpp.input.700690023" superClass="com.jetdrone.minpsp.managedbuilder.compiler.cpp.input"/>
 							</tool>
-							<tool id="com.jetdrone.minpsp.managedbuilder.tool.c.linker.psp.base.1157556779" name="MinPSP C Linker" superClass="com.jetdrone.minpsp.managedbuilder.tool.c.linker.psp.base"/>
-							<tool id="com.jetdrone.minpsp.managedbuilder.tool.cpp.linker.psp.base.1234045027" name="MinPSP C++ Linker" superClass="com.jetdrone.minpsp.managedbuilder.tool.cpp.linker.psp.base"/>
-							<tool id="com.jetdrone.minpsp.managedbuilder.tool.as.psp.base.159754539" name="MinPSP Assembler" superClass="com.jetdrone.minpsp.managedbuilder.tool.as.psp.base">
-								<option id="gnu.both.asm.option.include.paths.1721148457" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;C:\pspsdk\psp\sdk\include&quot;"/>
-								</option>
-								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.240132620" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							<tool id="com.jetdrone.minpsp.managedbuilder.tool.c.linker.psp.base.1745467402" name="MinPSP C Linker" superClass="com.jetdrone.minpsp.managedbuilder.tool.c.linker.psp.base"/>
+							<tool id="com.jetdrone.minpsp.managedbuilder.tool.cpp.linker.psp.base.1263732245" name="MinPSP C++ Linker" superClass="com.jetdrone.minpsp.managedbuilder.tool.cpp.linker.psp.base"/>
+							<tool id="com.jetdrone.minpsp.managedbuilder.tool.as.psp.base.1268892451" name="MinPSP Assembler" superClass="com.jetdrone.minpsp.managedbuilder.tool.as.psp.base">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.71060246" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
-							<tool id="com.jetdrone.minpsp.managedbuilder.tool.ar.psp.base.1298910320" name="MinPSP Archiver" superClass="com.jetdrone.minpsp.managedbuilder.tool.ar.psp.base"/>
+							<tool id="com.jetdrone.minpsp.managedbuilder.tool.ar.psp.base.940057712" name="MinPSP Archiver" superClass="com.jetdrone.minpsp.managedbuilder.tool.ar.psp.base"/>
 						</toolChain>
 					</folderInfo>
 				</configuration>
@@ -47,27 +38,17 @@
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-		<project id="MasterBoy.null.221849907" name="MasterBoy"/>
-	</storageModule>
-	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
-	<storageModule moduleId="refreshScope" versionNumber="2">
-		<configuration configurationName="Default">
-			<resource resourceType="PROJECT" workspacePath="/MasterBoy"/>
-		</configuration>
+		<project id="MasterBoy.null.806849058" name="MasterBoy"/>
 	</storageModule>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		<scannerConfigBuildInfo instanceId="com.jetdrone.minpsp.managedbuilder.toolchain.psp.base.1728465360;com.jetdrone.minpsp.managedbuilder.toolchain.psp.base.1728465360.350167130;com.jetdrone.minpsp.managedbuilder.tool.c.compiler.psp.base.1006749075;com.jetdrone.minpsp.managedbuilder.compiler.c.input.259494711">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.jetdrone.minpsp.managedbuilder.MinPSPScannerConfig"/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="com.jetdrone.minpsp.managedbuilder.toolchain.psp.base.1728465360;com.jetdrone.minpsp.managedbuilder.toolchain.psp.base.1728465360.350167130;com.jetdrone.minpsp.managedbuilder.tool.cpp.compiler.psp.base.591642001;com.jetdrone.minpsp.managedbuilder.compiler.cpp.input.1074522404">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.jetdrone.minpsp.managedbuilder.MinPSPScannerConfig"/>
-		</scannerConfigBuildInfo>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
 		<buildTargets>
 			<target name="all" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
 				<buildCommand>make</buildCommand>
+				<buildArguments/>
 				<buildTarget>all</buildTarget>
 				<stopOnError>true</stopOnError>
 				<useDefaultCommand>true</useDefaultCommand>
@@ -82,5 +63,10 @@
 				<runAllBuilders>true</runAllBuilders>
 			</target>
 		</buildTargets>
+	</storageModule>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Default">
+			<resource resourceType="PROJECT" workspacePath="/MasterBoy"/>
+		</configuration>
 	</storageModule>
 </cproject>

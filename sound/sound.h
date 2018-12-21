@@ -8,14 +8,14 @@ enum {
     STREAM_FM_MO,               /* YM2413 melody channel */
     STREAM_FM_RO,               /* YM2413 rhythm channel */
     STREAM_MAX                  /* Total # of sound streams */
-};  
+};
 
 /* Sound emulation structure */
 typedef struct
 {
-    void (*mixer_callback)(int16_t **stream, int16_t *output, int length);
-    int16_t *output;
-    int16_t *stream[STREAM_MAX];
+    void (*mixer_callback)(int16 **stream, int16 *output, int length);
+    int16 *output;
+    int16 *stream[STREAM_MAX];
     int fm_which;
     int enabled;
     int fps;
@@ -23,8 +23,8 @@ typedef struct
     int sample_count;
     int sample_rate;
     int done_so_far;
-    uint32_t fm_clock;
-    uint32_t psg_clock;
+    uint32 fm_clock;
+    uint32 psg_clock;
 } snd_t;
 
 
@@ -46,6 +46,6 @@ void sound_update(int line);
 void sound_update_ex(void *outBuffer, int sampleCount);
 //Game boy version
 void sound_update_gb(int line);
-void sound_mixer_callback(int16_t **stream, int16_t *output, int length);
+void sound_mixer_callback(int16 **stream, int16 *output, int length);
 
 #endif /* _SOUND_H_ */

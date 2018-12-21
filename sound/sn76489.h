@@ -39,25 +39,25 @@ typedef struct
     int Mute;
     int BoostNoise;
     int VolumeArray;
-    
+
     /* Variables */
     float Clock;
     float dClock;
     int PSGStereo;
     int NumClocksForSample;
     int WhiteNoiseFeedback;
-    
+
     /* PSG registers: */
-    uint16_t Registers[8];        /* Tone, vol x4 */
+    UINT16 Registers[8];        /* Tone, vol x4 */
     int LatchedRegister;
-    uint16_t NoiseShiftRegister;
-    int16_t NoiseFreq;            /* Noise channel signal generator frequency */
-    
+    UINT16 NoiseShiftRegister;
+    INT16 NoiseFreq;            /* Noise channel signal generator frequency */
+
     /* Output calculation variables */
-    int16_t ToneFreqVals[4];      /* Frequency register values (counters) */
-    int8_t ToneFreqPos[4];        /* Frequency channel flip-flops */
-    int16_t Channels[4];          /* Value of each channel, before stereo is applied */
-    int32_t IntermediatePos[4];   /* intermediate values used at boundaries between + and - */
+    INT16 ToneFreqVals[4];      /* Frequency register values (counters) */
+    INT8 ToneFreqPos[4];        /* Frequency channel flip-flops */
+    INT16 Channels[4];          /* Value of each channel, before stereo is applied */
+    INT32 IntermediatePos[4];   /* intermediate values used at boundaries between + and - */
 
 } SN76489_Context;
 
@@ -66,13 +66,13 @@ void SN76489_Init(int which, int PSGClockValue, int SamplingRate);
 void SN76489_Reset(int which);
 void SN76489_Shutdown(void);
 void SN76489_Config(int which, int mute, int boost, int volume, int feedback);
-void SN76489_SetContext(int which, uint8_t *data);
-void SN76489_GetContext(int which, uint8_t *data);
-uint8_t *SN76489_GetContextPtr(int which);
+void SN76489_SetContext(int which, uint8 *data);
+void SN76489_GetContext(int which, uint8 *data);
+uint8 *SN76489_GetContextPtr(int which);
 int SN76489_GetContextSize(void);
 void SN76489_Write(int which, int data);
 void SN76489_GGStereoWrite(int which, int data);
-void SN76489_Update(int which, int16_t **buffer, int length);
+void SN76489_Update(int which, INT16 **buffer, int length);
 
 #endif /* _SN76489_H_ */
 

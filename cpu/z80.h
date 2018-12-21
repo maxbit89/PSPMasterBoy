@@ -27,13 +27,13 @@ enum {
 typedef struct {
 /* 00 */	PAIR	PREPC,PC,SP,AF,BC,DE,HL,IX,IY;
 /* 24 */	PAIR	AF2,BC2,DE2,HL2;
-/* 34 */	uint8_t	R,R2,IFF1,IFF2,HALT,IM,I;
-/* 3B */	uint8_t	irq_max;			/* number of daisy chain devices		*/
-/* 3C */	int8_t	request_irq;		/* daisy chain next request device		*/
-/* 3D */	int8_t	service_irq;		/* daisy chain next reti handling device */
-/* 3E */	uint8_t	nmi_state;			/* nmi line state */
-/* 3F */	uint8_t	irq_state;			/* irq line state */
-/* 40 */	uint8_t	int_state[Z80_MAXDAISY];
+/* 34 */	UINT8	R,R2,IFF1,IFF2,HALT,IM,I;
+/* 3B */	UINT8	irq_max;			/* number of daisy chain devices		*/
+/* 3C */	INT8	request_irq;		/* daisy chain next request device		*/
+/* 3D */	INT8	service_irq;		/* daisy chain next reti handling device */
+/* 3E */	UINT8	nmi_state;			/* nmi line state */
+/* 3F */	UINT8	irq_state;			/* irq line state */
+/* 40 */	UINT8	int_state[Z80_MAXDAISY];
 /* 44 */	Z80_DaisyChain irq[Z80_MAXDAISY];
 /* 84 */	int 	(*irq_callback)(int irqline);
 /* 88 */	int 	extra_cycles;		/* extra cycles for interrupts */
@@ -63,8 +63,8 @@ extern unsigned char *cpu_readmap[64];
 extern unsigned char *cpu_writemap[64];
 
 void (*cpu_writemem16)(int address, int data);
-void (*cpu_writeport16)(uint16_t port, uint8_t data);
-uint8_t (*cpu_readport16)(uint16_t port);
+void (*cpu_writeport16)(uint16 port, uint8 data);
+uint8 (*cpu_readport16)(uint16 port);
 
 void z80_reset_cycle_count(void);
 int z80_get_elapsed_cycles(void);

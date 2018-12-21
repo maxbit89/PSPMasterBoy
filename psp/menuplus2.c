@@ -216,14 +216,14 @@ int menuFileItemCompare(SUBMENUITEM *a, SUBMENUITEM *b)
 		SJISCopy(b, file2);
 		for(i=0; file1[i]; i++)
 		{
-			ca = file1[i] ; 
+			ca = file1[i] ;
 			cb = file2[i] ;
 			ret = ca - cb ;
 			if( ret != 0 ) return ret;
 		}
 		return 0;
 	}
-	
+
 	if (a->prop1 & PSP_FILE_TYPE_DIR) return -1 ;
 	else					          return  1 ;
 }
@@ -248,16 +248,16 @@ void menuFileSelectSortFiles(SUBMENU *s, int left)
 	}
 }
 
-int getExtId(const char *szFilePath) 
+int getExtId(const char *szFilePath)
 {
 	char *pszExt;
 	int i;
-	if((pszExt = strrchr(szFilePath, '.'))) 
+	if((pszExt = strrchr(szFilePath, '.')))
 	{
 		pszExt++;
-		for (i = 0; stExtentions[i].nExtId != EXT_UNKNOWN; i++) 
+		for (i = 0; stExtentions[i].nExtId != EXT_UNKNOWN; i++)
 		{
-			if (!stricmp(stExtentions[i].szExt,pszExt)) 
+			if (!stricmp(stExtentions[i].szExt,pszExt))
 			{
 				return stExtentions[i].nExtId;
 			}
@@ -360,7 +360,7 @@ void ShowMenuFileSelect(char *savepath, int pathSlot)			{
 	menuFileSelectSubMenu = (SUBMENU*)malloc(sizeof(SUBMENU) * 2);
 	menuFileSelectSwap = 0;
 	menuFileSelectCurrentMenu = 0;
-	
+
 	if (nbPlaces > PATHSLOT_BASE)		{
 		strcpy(menuFileSelectPath, "My places");
 		myPlacesFolder = 1;
@@ -676,7 +676,7 @@ redo:
 
 STEXTENSIONLIST *stExtentions;
 
-STEXTENSIONLIST stRomExtentions[] = 
+STEXTENSIONLIST stRomExtentions[] =
 {
 	"gb" , EXT_GB,
 	"gbc", EXT_GB,
@@ -690,7 +690,7 @@ STEXTENSIONLIST stRomExtentions[] =
 	NULL , EXT_UNKNOWN
 };
 
-STEXTENSIONLIST stMusicExtentions[] = 
+STEXTENSIONLIST stMusicExtentions[] =
 {
 	// "gb" , EXT_GB  ,
 	// "gbc", EXT_GB  ,

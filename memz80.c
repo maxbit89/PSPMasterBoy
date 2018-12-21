@@ -3,23 +3,22 @@
     Z80 port handlers.
 */
 #include "shared.h"
-#include <psptypes.h>
 
 /* Pull-up resistors on data bus */
-uint8_t data_bus_pullup   = 0x00;
-uint8_t data_bus_pulldown = 0x00;
+uint8 data_bus_pullup   = 0x00;
+uint8 data_bus_pulldown = 0x00;
 
 /* Read unmapped memory */
-uint8_t z80_read_unmapped(void)
+uint8 z80_read_unmapped(void)
 {
     int pc = z80_get_reg(Z80_PC);
-    uint8_t data;
+    uint8 data;
     pc = (pc - 1) & 0xFFFF;
     data = cpu_readmap[pc >> 13][pc & 0x03FF];
     return ((data | data_bus_pullup) & ~data_bus_pulldown);
 }
 
-void memctrl_w(uint8_t data)
+void memctrl_w(uint8 data)
 {
     sms.memctrl = data;
 }
@@ -28,7 +27,7 @@ void memctrl_w(uint8_t data)
 /* Sega Master System port handlers                                         */
 /*--------------------------------------------------------------------------*/
 
-void sms_port_w(uint16_t port, uint8_t data)
+void sms_port_w(uint16 port, uint8 data)
 {
     switch(port & 0xC1)
     {
@@ -56,7 +55,7 @@ void sms_port_w(uint16_t port, uint8_t data)
     }
 }
 
-uint8_t sms_port_r(uint16_t port)
+uint8 sms_port_r(uint16 port)
 {
     switch(port & 0xC0)
     {
@@ -82,7 +81,7 @@ uint8_t sms_port_r(uint16_t port)
 /* Sega Master System (J) port handlers                                     */
 /*--------------------------------------------------------------------------*/
 
-void smsj_port_w(uint16_t port, uint8_t data)
+void smsj_port_w(uint16 port, uint8 data)
 {
     port &= 0xFF;
 
@@ -130,7 +129,7 @@ void smsj_port_w(uint16_t port, uint8_t data)
     }
 }
 
-uint8_t smsj_port_r(uint16_t port)
+uint8 smsj_port_r(uint16 port)
 {
     port &= 0xFF;
 
@@ -162,7 +161,7 @@ uint8_t smsj_port_r(uint16_t port)
 /* Game Gear port handlers                                                  */
 /*--------------------------------------------------------------------------*/
 
-void gg_port_w(uint16_t port, uint8_t data)
+void gg_port_w(uint16 port, uint8 data)
 {
     port &= 0xFF;
 
@@ -194,7 +193,7 @@ void gg_port_w(uint16_t port, uint8_t data)
 }
 
 
-uint8_t gg_port_r(uint16_t port)
+uint8 gg_port_r(uint16 port)
 {
     port &= 0xFF;
 
@@ -232,7 +231,7 @@ uint8_t gg_port_r(uint16_t port)
 /* Game Gear (MS) port handlers                                             */
 /*--------------------------------------------------------------------------*/
 
-void ggms_port_w(uint16_t port, uint8_t data)
+void ggms_port_w(uint16 port, uint8 data)
 {
     port &= 0xFF;
 
@@ -258,7 +257,7 @@ void ggms_port_w(uint16_t port, uint8_t data)
     }
 }
 
-uint8_t ggms_port_r(uint16_t port)
+uint8 ggms_port_r(uint16 port)
 {
     port &= 0xFF;
 
@@ -293,7 +292,7 @@ uint8_t ggms_port_r(uint16_t port)
 /* MegaDrive / Genesis port handlers                                        */
 /*--------------------------------------------------------------------------*/
 
-void md_port_w(uint16_t port, uint8_t data)
+void md_port_w(uint16 port, uint8 data)
 {
     switch(port & 0xC1)
     {
@@ -318,7 +317,7 @@ void md_port_w(uint16_t port, uint8_t data)
 }
 
 
-uint8_t md_port_r(uint16_t port)
+uint8 md_port_r(uint16 port)
 {
     switch(port & 0xC0)
     {

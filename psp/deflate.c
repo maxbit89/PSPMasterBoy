@@ -271,7 +271,7 @@ int ZEXPORT deflateInit2_(strm, level, method, windowBits, memLevel, strategy,
     }
     if (windowBits == 8) windowBits = 9;  /* until 256-byte window bug fixed */
     s = (deflate_state *) ZALLOC(strm, 1, sizeof(deflate_state));
-    if (s == Z_NULL) 
+    if (s == Z_NULL)
     {
         iprintf("state fail 1\n");
         return Z_MEM_ERROR;
@@ -575,7 +575,7 @@ int ZEXPORT deflate (strm, flush)
        strm->msg = "no state";
        return Z_STREAM_ERROR;
    }
-    
+
     if(flush > Z_FINISH || flush < 0) {
        strm->msg = "bad flush";
         return Z_STREAM_ERROR;

@@ -6,6 +6,11 @@
 //Defined here, also in SMS.C
 #define DEBUG_MODE
 
+//Timout for key reassignment
+#ifndef KEY_ASSIGN_TIMEOUT_S //make parameter overwriteable from gcc option -D
+#define KEY_ASSIGN_TIMEOUT_S -1 //-1 means no timeout.
+#endif
+
 /*
 	Stick analogique: bits 24-27 de held.value
 	Chercher PADDING et enlever!!!
@@ -281,7 +286,7 @@ OSL_CONTROLLER *MyReadKeys()
 {
 	SceCtrlData ctl;
 	u32 oldButtons;
-	
+
 	sceCtrlSetSamplingCycle(0);
 	sceCtrlSetSamplingMode(1);
 	sceCtrlPeekBufferPositive( &ctl, 1 );
@@ -424,7 +429,7 @@ void menuGetMenuKeys(u32 *pad)		{
 			else
 				menuPressedKeys.acuts[key] = 0;
 		}
-		
+
 		if (thisKey)		{
 			//Donne une valeur plus grande aux raccourcis dont le plus grand nombre de touches correspond
 			int j, k = 0;
@@ -1160,11 +1165,12 @@ int menuRedefineGetNewKey(SUBMENUITEM *sub)		{
 	do			{
 		MyReadKeys();
 		oslWaitVSync();
-		counter++;
-	} while(!(osl_keys->held.value & STDKEYMASK) && counter < 180);
+		if(KEY_ASSIGN_TIMEOUT_S != -1) //if timout is disabled don't count
+			counter++;
+	} while(!(osl_keys->held.value & STDKEYMASK) && counter < KEY_ASSIGN_TIMEOUT_S*60 && KEY_ASSIGN_TIMEOUT_S != -1);
 
-	//Attend sur une touche mais au maximum 3 secondes!
-	if (counter >= 180)
+	//if no key pressed goto end.
+	if (counter >= KEY_ASSIGN_TIMEOUT_S*60)
 		goto end;
 
 	counter = 0;
@@ -1781,7 +1787,7 @@ int fctMainFileSram(SUBMENU *menu, SUBMENUITEM *sub, u32 event)
 }
 
 SUBMENUITEM menuMainFileSramItems[]=		{
-	{"Autosave SRAM", "Save SRAM when quitting a game", "", &menuMainFileSramAutosave},
+	{"Autosave SRAM", "Save SRAM automatically", "", &menuMainFileSramAutosave},
 	{"Save SRAM", "Save SRAM now", "", NULL, 1},
 };
 
@@ -2358,7 +2364,7 @@ void fctMsgBoxAbout_Handle(WINDOW *w, int event)		{
 		if (osl_keys->pressed.down)
 			msgAboutTextOffset = min(msgAboutTextOffset + 2, msgAboutTextHeight / osl_curFont->charHeight - nbLignes);
 		msgAboutTextOffsetDisplay += ((msgAboutTextOffset * osl_curFont->charHeight) - msgAboutTextOffsetDisplay) / 3.0f;
-		
+
 		//Tout en bas
 		int arrowHaut, arrowBas;
 		arrowBas = !(msgAboutTextOffset == msgAboutTextHeight / osl_curFont->charHeight - nbLignes);
@@ -2371,7 +2377,7 @@ void fctMsgBoxAbout_Handle(WINDOW *w, int event)		{
 			msgAboutArrowAlpha[1] = min(msgAboutArrowAlpha[1] + 32, 255);
 		else
 			msgAboutArrowAlpha[1] = max(msgAboutArrowAlpha[1] - 32, 0);
-		
+
 		msgBoxArrowOffset++;
 
 /*		HandleSubMenu(&menuMsgBoxSaveConfig);
@@ -2393,7 +2399,7 @@ void menuTakeScreenshot()		{
 			finalptr = ptr + 1;
 		ptr++;
 	}
-	GetJustFileName(gamename, finalptr);	
+	GetJustFileName(gamename, finalptr);
 
 	sceIoMkdir("ms0:/PSP/PHOTO/MasterBoy", 0);
 	for (imageNumber=1;imageNumber<100;imageNumber++)			{
@@ -3459,14 +3465,16 @@ void menuLoadFiles()
 {
 	menuLoadFilesMin();
 	if (!imgIcons)			{
-		OSL_IMAGE *temp;
+		enum OSL_PIXELFORMATS pixelformat = OSL_PF_5650;
 		imgBack = loadBackgroundImage("res/back.png");
 		oslSetTransparentColor(RGB(255, 0, 254));
 		imgIcons = oslLoadImageFile("res/icons.png", OSL_IN_RAM, OSL_PF_5551);
 		imgNumbers = oslLoadImageFile("res/numbers.png", OSL_IN_RAM, OSL_PF_5551);
 		oslDisableTransparentColor();
 	}
-	oslAssert(imgBack && imgIcons && imgNumbers);
+	oslAssert(imgBack);
+	oslAssert(imgIcons);
+	oslAssert(imgNumbers);
 }
 
 void menuDrawIcons(MENU *m, int angle, int ajoutRayon)
@@ -3685,7 +3693,7 @@ void InitConfig()
 	//Système
 	char sValue[256];
 	int iValue;
-	
+
 	menuTimeZone=0;
 	menuDayLightSaving=0;
 
@@ -3697,7 +3705,7 @@ void InitConfig()
 		menuLanguage = iValue;					//Défaut: PSP_SYSTEMPARAM_LANGUAGE_ENGLISH
 	if (sceUtilityGetSystemParamString(PSP_SYSTEMPARAM_ID_STRING_NICKNAME, sValue, 256) != PSP_SYSTEMPARAM_RETVAL_FAIL)
 	{
-		//get nick name		
+		//get nick name
 		//now convert to sjis
 		int i=0, j=0, k;
 		unsigned int utf8;
@@ -3705,7 +3713,7 @@ void InitConfig()
 			utf8 = (uint8)sValue[i++];
 			utf8 = (utf8 << 8) | (uint8)sValue[i++];
 			utf8 = (utf8 << 8) | (uint8)sValue[i++];
-			
+
 			for (k=0;k<sjis_xlate_entries;k++)		{
 				if (utf8 == sjis_xlate[k].utf8)			{
 					menuNickname[j++] = sjis_xlate[k].sjis >> 8;
@@ -3714,7 +3722,7 @@ void InitConfig()
 				}
 			}
 		}
-		menuNickname[j]=0;				
+		menuNickname[j]=0;
 	}*/
 }
 
@@ -4143,7 +4151,7 @@ void ShowMenuJoystickCalibration()			{
 
 		MyReadKeys();
 		menuStandardVblank();
-		
+
 		//Annuler
 		if (osl_keys->pressed.circle)
 			break;
@@ -4217,7 +4225,7 @@ void ShowMenuJoystickCalibration()			{
 				break;
 			}
 		}
-		
+
 		fade = min(fade + 16, 255);
 		skip = oslSyncFrame();
 	}
@@ -4293,7 +4301,7 @@ int fctMsgBoxReloadConfig(SUBMENU *menu, SUBMENUITEM *sub, u32 event)
 			}
 			else if (sub->prop1 == 2)			{
 				char temp[MAX_PATH];
-				
+
 				//First load default
 				LoadUserDefaultConfig();
 				if (menuIsInGame)
@@ -4452,7 +4460,7 @@ void menuPlusShowMenu()
 	int nRayon, skip=0, lastOption, i, menuEndingFade = 0;
 	static int bFirstTime = 1;
 	char temp[200];
-	
+
 	//The menu runs at 60 fps, unlike PAL emulation
 	oslSetFramerate(60);
 

@@ -20,7 +20,7 @@
 #include "psp/pspcommon.h"
 
 bitmap_t bitmap;
-cart_t cart;                
+cart_t cart;
 input_t input;
 int frame_underclock;
 extern unsigned int gblCpuCycles;

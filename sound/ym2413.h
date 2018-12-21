@@ -16,7 +16,7 @@ typedef signed int		INT32;   /* signed 32bit   */
 #endif
 
 #if (SAMPLE_BITS==16)
-typedef int16_t SAMP;
+typedef INT16 SAMP;
 #endif
 #if (SAMPLE_BITS==8)
 typedef INT8 SAMP;
@@ -30,7 +30,7 @@ void YM2413Shutdown(void);
 void YM2413ResetChip(int which);
 void YM2413Write(int which, int a, int v);
 unsigned char YM2413Read(int which, int a);
-void YM2413UpdateOne(int which, int16_t **buffers, int length);
+void YM2413UpdateOne(int which, INT16 **buffers, int length);
 
 typedef void (*OPLL_UPDATEHANDLER)(int param,int min_interval_us);
 

@@ -59,7 +59,7 @@ void ControlsUpdate(void)
 	if(menuConfig.file.wifiEnabled)
 	{
 		count++;
-	
+
 		if(count < 5)
 			return;
 	}
@@ -116,7 +116,7 @@ void ControlsUpdate(void)
 		}
 
 		if(pad1->Buttons & menuConfig.ctrl.keys.start)
-			input.system |= (IS_GG) ? INPUT_START : INPUT_PAUSE;		
+			input.system |= (IS_GG) ? INPUT_START : INPUT_PAUSE;
 	}
 
 /*	if(pad2)
@@ -137,7 +137,7 @@ void ControlsUpdate(void)
 			if(pad2->Buttons & PSP_CTRL_CIRCLE) input.pad[1] |= (IS_GG) ? INPUT_BUTTON1 : INPUT_BUTTON2;
 
 			if(pad2->Buttons & PSP_CTRL_START)
-				input.system |= (IS_GG) ? INPUT_START : INPUT_PAUSE;		
+				input.system |= (IS_GG) ? INPUT_START : INPUT_PAUSE;
 
 			if(pad2->Buttons & PSP_CTRL_LTRIGGER)
 			{
@@ -166,14 +166,14 @@ void ControlsUpdate(void)
 	if(SmsConfig.WifiEnabled)
 	{
 		count++;
-	
+
 		if(count < 5)
 			return;
 	}
 	count = 0;
 
 	sceCtrlPeekBufferPositive(&pspPad, 1);
-	
+
 	if(SmsConfig.WifiEnabled)
 	{
 		if(SmsConfig.Server)
@@ -216,7 +216,7 @@ void ControlsUpdate(void)
 		if(pad1->Buttons & PSP_CTRL_CIRCLE) input.pad[0] |= INPUT_BUTTON2;
 
 		if(pad1->Buttons & PSP_CTRL_START)
-			input.system |= (IS_GG) ? INPUT_START : INPUT_PAUSE;		
+			input.system |= (IS_GG) ? INPUT_START : INPUT_PAUSE;
 
 		if(pad1->Buttons & PSP_CTRL_SELECT)
 		{
@@ -244,7 +244,7 @@ void ControlsUpdate(void)
 			if(pad2->Buttons & PSP_CTRL_CIRCLE) input.pad[1] |= INPUT_BUTTON2;
 
 			if(pad2->Buttons & PSP_CTRL_START)
-				input.system |= (IS_GG) ? INPUT_START : INPUT_PAUSE;		
+				input.system |= (IS_GG) ? INPUT_START : INPUT_PAUSE;
 
 			if(pad2->Buttons & PSP_CTRL_SELECT)
 			{

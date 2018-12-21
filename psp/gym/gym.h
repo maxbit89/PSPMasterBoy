@@ -48,13 +48,13 @@
 		int load_ezpk_gym(void *gymFile);
 		int load_zlib_gym(void *gymFile);
 		void calc_gym_time_length(SONGINFO* info);
-		
+
 		virtual char is_our_content_type(const char * url,const char * type)
 		{
 			return !strcmp(type,"audio/gym");
 		}
 
-		virtual char test_filename(const char * fn,const char * ext) 
+		virtual char test_filename(const char * fn,const char * ext)
 		{
 			return !stricmp(ext,"GYM");
 		}

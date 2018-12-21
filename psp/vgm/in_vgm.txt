@@ -4,7 +4,7 @@ VGM input plugin 0.34
 PROBLEMS
 ========
 
-Here are the things that can go wrong, right at the start so you can 
+Here are the things that can go wrong, right at the start so you can
 find them easily.
 
 1. VGM files play too fast
@@ -29,7 +29,7 @@ Open this URL in Winamp to hear a demo:
 
 http://www.smspower.org/music/vgm/demo/Golvellius.m3u
 
-To use: put in_vgm in Winamp's plugins\ folder, and restart Winamp. If 
+To use: put in_vgm in Winamp's plugins\ folder, and restart Winamp. If
 you got the self-installing version then it should already be working.
 
 Load .vgm or .vgz files in Winamp; go to the "File types" preferences
@@ -45,10 +45,10 @@ page to associate these extensions:
 
 Be sure to check out the file info and plugin configuration dialogues.
 
-The YM2413 emulation engine is EMU2413 by Mitsutaka Okazaki 
-(http://www.angel.ne.jp/~okazaki/ym2413). The PSG engine is by me. The 
-YM2612 engine is from Gens by Stephane Dallongeville 
-(http://gens.consolemul.com). The YM2151 engine is from MAME 
+The YM2413 emulation engine is EMU2413 by Mitsutaka Okazaki
+(http://www.angel.ne.jp/~okazaki/ym2413). The PSG engine is by me. The
+YM2612 engine is from Gens by Stephane Dallongeville
+(http://gens.consolemul.com). The YM2151 engine is from MAME
 (http://www.mame.net) and was added by BlackAura. ZLib decompression
 is by Jean-loup Gailly and Mark Adler.
 
@@ -82,7 +82,7 @@ Click on "View GD3 in browser" to open either "Now Playing" (the
 MiniBrowser in older versions of Winamp) or your regular web browser,
 with a page showing the GD3 tag. The reason this is done is, HTML 4.0
 compliant browsers *do* generally have the ability to display Unicode
-text. You'll need to have appropriate fonts installed (Arial Unicode is 
+text. You'll need to have appropriate fonts installed (Arial Unicode is
 a good one to have).
 
 Click on "Configure plugin..." to open the plugin configuration
@@ -103,7 +103,7 @@ To open:
   Plug-ins -> Input page, then double-click on the "VGM input plugin
   v0.xx ( IN_VGM.DLL)" item, or select it and click on the Configure
   button.
-  
+
 Playback tab:
 
 - Looping:
@@ -182,8 +182,8 @@ GD3 tags tab:
 
 - Now Playing:
   "Display GD3 tags as HTML in "Now Playing""
-    If checked, displaying a GD3 tag as HTML (using the "View GD3 in 
-    browser" button described above) will use Now Playing. If unckecked, 
+    If checked, displaying a GD3 tag as HTML (using the "View GD3 in
+    browser" button described above) will use Now Playing. If unckecked,
     it will use your regular web browser.
   "Display them automatically"
     If checked, GD3 tags will automatically be displayed in Now Playing
@@ -232,12 +232,12 @@ YM2413 tab:
   If the current track includes PSG data, the checkbozes will allow you
   to enable and disable indivisual sound channels.
   Stereo control is not yet available for this chip.
-  
+
 - Emulation
   "High quality YM2413"
     This runs the YM2413 engine at the true clock rate and resamples to
     44100Hz. The effect is marginal.
-    
+
 YM2612/YM2151 tab:
 
 "Enable YM2612"
@@ -248,8 +248,8 @@ YM2612/YM2151 tab:
 Bottom part of window:
 
 "Immediate update"
-  If this is selected, the effect of changing some of the settings will 
-  be instant, but it may introduce jumps or pauses to the sound, 
+  If this is selected, the effect of changing some of the settings will
+  be instant, but it may introduce jumps or pauses to the sound,
   depending on the output plugin and the type of VGM file playing. If
   it is not selected then the effect will take the length of the output
   buffer (usually two seconds) to be heard.
@@ -612,7 +612,7 @@ Alpha 11 20/8/01
 Alpha 10 19/8/01
 ================
 
-+ It now looks for and uses the .ayz file extension. It actually 
++ It now looks for and uses the .ayz file extension. It actually
   doesn't matter which extension you give a file, compressed or not.
 + AYM 1.11, plus you can now choose to try and play versions not in the
   supported range (1.08-1.11).
@@ -668,7 +668,7 @@ Alpha 6 15/8/01
 Alpha 5 15/8/01
 ===============
 
-+ Fixed up the channel disabling, although it's still in the info box 
++ Fixed up the channel disabling, although it's still in the info box
   (it'll probably end up somewhere else). Before it took until the next
   volume change on that channel to mute, now it's only the output
   plugin' s buffer length that stops it being instant. Noise can be
@@ -702,7 +702,7 @@ Alpha 4 13/8/01
   and flip-flops). The last version used another method which I thought
   up based on maths and stuff like that, which sounded OK until the
   sound started using vibrato, in which case it sounded terrible. Now
-  it sounds perfect (except for emulation of the "fading" 
+  it sounds perfect (except for emulation of the "fading"
   flip-flops...). As an added bonus it seems to be a bit faster too,
   the decoding thread uses about 16.2% CPU for me now.
 + Added VERY quick and dirty noise emulation. It's just volume*random(),

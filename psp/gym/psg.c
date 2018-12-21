@@ -101,7 +101,7 @@ void PSG_Write(int data)
 		PSG.Current_Channel = PSG.Current_Register >> 1;
 
 		data &= 0x0F;
-		
+
 		PSG.Register[PSG.Current_Register] = (PSG.Register[PSG.Current_Register] & 0x3F0) | data;
 
 		if (PSG.Current_Register & 1)
@@ -152,7 +152,7 @@ void PSG_Write(int data)
 	{
 		if (!(PSG.Current_Register & 1))
 		{
-			// Frequency 
+			// Frequency
 
 			if (PSG.Current_Channel != 3)
 			{
@@ -289,7 +289,7 @@ void PSG_Update(int **buffer, int length)
 	}
 
 	// Channel 3 - Noise
-	
+
 	if ((cur_vol = PSG.Volume[3]))
 	{
 		cur_cnt = PSG.Counter[3];
@@ -351,13 +351,13 @@ void PSG_Init(int clock, int rate)
 	}
 
 	PSG_Step_Table[0] = PSG_Step_Table[1];
-		
+
 	for(i = 0; i < 3; i++)
 	{
 		out = (double) (clock) / (double) (1 << (9 + i));
 		out /= (double) (rate);
 		out *= 65536.0;
-			
+
 		PSG_Noise_Step_Table[i] = (unsigned int) out;
 	}
 
@@ -430,7 +430,7 @@ void PSG_Init(int clock, int rate)
 void PSG_Save_State(void)
 {
 	int i;
-	
+
 	for(i = 0; i < 8; i++) PSG_Save[i] = PSG.Register[i];
 }
 
@@ -438,7 +438,7 @@ void PSG_Save_State(void)
 void PSG_Restore_State(void)
 {
 	int i;
-	
+
 	for(i = 0; i < 8; i++)
 	{
 		PSG_Write(0x80 | (i << 4) | (PSG_Save[i] & 0xF));

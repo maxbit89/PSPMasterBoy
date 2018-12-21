@@ -24,7 +24,10 @@
 #include "../syscall.h"
 #include "_bit_table.h"
 
+#define WRITE_BACKUP_DELAY  (10)
+
 extern unsigned int gblCpuCycles;
+extern unsigned int backup_update;
 
 #define Z_FLAG 0x40
 #define H_FLAG 0x10
@@ -96,7 +99,7 @@ void cpu_init(void)
 		z802gb[i]=((i&0x40)?0x80:0)|((i&0x10)?0x20:0)|((i&0x02)?0x40:0)|((i&0x01)?0x10:0);
 		gb2z80[i]=((i&0x80)?0x40:0)|((i&0x40)?0x02:0)|((i&0x20)?0x10:0)|((i&0x10)?0x01:0);
 	}
-	
+
 	cpu_reset();
 }
 
@@ -132,7 +135,7 @@ void cpu_reset(void)
 	memset(stack,0,sizeof(stack));
 	memset(oam,0,sizeof(oam));
 	memset(spare_oam,0,sizeof(spare_oam));
-	
+
 	if(rp_fd >= 0){
 		sceIoClose(rp_fd);
 		rp_fd = -1;
@@ -309,6 +312,7 @@ void cpu_write_direct_ord(word adr,byte dat)
 			mbc_get_sram()[adr&0x1FFF]=dat;//カートリッジRAM
 		else
 			mbc_ext_write(adr,dat);
+		backup_update = WRITE_BACKUP_DELAY;
 		break;
 	case 6:
 		if (adr&0x1000)
@@ -346,6 +350,7 @@ inline void cpu_write_direct(word adr,byte dat)
 			mbc_get_sram()[adr&0x1FFF]=dat;//カートリッジRAM
 		else
 			mbc_ext_write(adr,dat);
+		backup_update = WRITE_BACKUP_DELAY;
 	} else {
 		cpu_write_direct_ord(adr,dat);
 	}
@@ -556,7 +561,7 @@ void cpu_irq_process()
 	cpu_write(c_regs_SP-2,c_regs_PC&0xFF);
 	cpu_write(c_regs_SP-1,(c_regs_PC>>8));
 	c_regs_SP-=2;
-	
+
 	if (g_regs.IF&g_regs.IE&INT_VBLANK){//VBlank
 		c_regs_PC=0x40;
 		g_regs.IF&=0xFE;
@@ -589,7 +594,7 @@ void cpu_irq_process()
 //		g_regs.IF=0;
 
 	cpu_irq_check();
-	
+
 	//割り込みがかかったのでステートを足す
 	//13stateは暫定値。GBでどうなってるかは知らない。
 	//よくわからんのでsys_clockは足してないが入れてもいいかも - LCK
@@ -697,8 +702,8 @@ int cpu_get_clock() { return total_clock; }
 char cpu_get_speed() { return speed; }
 char *cpu_get_halt() { return &halt; }
 
-struct cpu_regs *cpu_get_c_regs() 
-{ 
+struct cpu_regs *cpu_get_c_regs()
+{
 	_c_regs.AF.w=c_regs_AF;
 	_c_regs.BC.w=c_regs_BC;
 	_c_regs.DE.w=c_regs_DE;
@@ -706,11 +711,11 @@ struct cpu_regs *cpu_get_c_regs()
 	_c_regs.SP  =c_regs_SP;
 	_c_regs.PC  =c_regs_PC;
 	_c_regs.I   =c_regs_I ;
-	return &_c_regs; 
+	return &_c_regs;
 }
 
-struct cpu_regs *cpu_set_c_regs() 
-{ 
+struct cpu_regs *cpu_set_c_regs()
+{
 	c_regs_AF=_c_regs.AF.w;
 	c_regs_BC=_c_regs.BC.w;
 	c_regs_DE=_c_regs.DE.w;
@@ -718,7 +723,7 @@ struct cpu_regs *cpu_set_c_regs()
 	c_regs_SP=_c_regs.SP  ;
 	c_regs_PC=_c_regs.PC  ;
 	c_regs_I =_c_regs.I   ;
-	cpu_irq_check(); 
-	return &_c_regs; 
+	cpu_irq_check();
+	return &_c_regs;
 }
 

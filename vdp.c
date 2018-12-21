@@ -126,7 +126,7 @@ void viewport_check(void)
 }
 
 
-void vdp_reg_w(uint8_t r, uint8_t d)
+void vdp_reg_w(uint8 r, uint8 d)
 {
     /* Store register data */
     vdp.reg[r] = d;
@@ -167,7 +167,7 @@ void vdp_reg_w(uint8_t r, uint8_t d)
 }
 
 
-void vdp_write(int offset, uint8_t data)
+void vdp_write(int offset, uint8 data)
 {
     int index;
 
@@ -189,7 +189,7 @@ void vdp_write(int offset, uint8_t data)
                         MARK_BG_DIRTY(vdp.addr);
                     }
                     break;
-        
+
                 case 3: /* CRAM write */
                     index = (vdp.addr & 0x1F);
                     if(data != vdp.cram[index])
@@ -220,7 +220,7 @@ void vdp_write(int offset, uint8_t data)
                     vdp.buffer = vdp.vram[vdp.addr & 0x3FFF];
                     vdp.addr = (vdp.addr + 1) & 0x3FFF;
                 }
-        
+
                 if(vdp.code == 2)
                 {
                     int r = (data & 0x0F);
@@ -232,9 +232,9 @@ void vdp_write(int offset, uint8_t data)
     }
 }
 
-uint8_t vdp_read(int offset)
+uint8 vdp_read(int offset)
 {
-    uint8_t temp;
+    uint8 temp;
 
     switch(offset & 1)
     {
@@ -259,7 +259,7 @@ uint8_t vdp_read(int offset)
     return -1;
 }
 
-uint8_t vdp_counter_r(int offset)
+uint8 vdp_counter_r(int offset)
 {
     int pixel;
 
@@ -282,7 +282,7 @@ uint8_t vdp_counter_r(int offset)
 /* Game Gear VDP handlers                                                   */
 /*--------------------------------------------------------------------------*/
 
-void gg_vdp_write(int offset, uint8_t data)
+void gg_vdp_write(int offset, uint8 data)
 {
     int index;
 
@@ -302,10 +302,10 @@ void gg_vdp_write(int offset, uint8_t data)
                         MARK_BG_DIRTY(vdp.addr);
                     }
                     break;
-        
+
                 case 3: /* CRAM write */
                     if(vdp.addr & 1)
-                    {                    
+                    {
                         vdp.cram_latch = (vdp.cram_latch & 0x00FF) | ((data & 0xFF) << 8);
                         vdp.cram[(vdp.addr & 0x3E) | (0)] = (vdp.cram_latch >> 0) & 0xFF;
                         vdp.cram[(vdp.addr & 0x3E) | (1)] = (vdp.cram_latch >> 8) & 0xFF;
@@ -338,7 +338,7 @@ void gg_vdp_write(int offset, uint8_t data)
                     vdp.buffer = vdp.vram[vdp.addr & 0x3FFF];
                     vdp.addr = (vdp.addr + 1) & 0x3FFF;
                 }
-        
+
                 if(vdp.code == 2)
                 {
                     int r = (data & 0x0F);
@@ -354,7 +354,7 @@ void gg_vdp_write(int offset, uint8_t data)
 /* MegaDrive / Genesis VDP handlers                                         */
 /*--------------------------------------------------------------------------*/
 
-void md_vdp_write(int offset, uint8_t data)
+void md_vdp_write(int offset, uint8 data)
 {
     int index;
 
@@ -375,7 +375,7 @@ void md_vdp_write(int offset, uint8_t data)
                         MARK_BG_DIRTY(vdp.addr);
                     }
                     break;
-        
+
                 case 2: /* CRAM write */
                 case 3: /* CRAM write */
                     index = (vdp.addr & 0x1F);
@@ -406,7 +406,7 @@ void md_vdp_write(int offset, uint8_t data)
                     vdp.buffer = vdp.vram[vdp.addr & 0x3FFF];
                     vdp.addr = (vdp.addr + 1) & 0x3FFF;
                 }
-        
+
                 if(vdp.code == 2)
                 {
                     int r = (data & 0x0F);
@@ -466,7 +466,7 @@ void tms_write(int offset, int data)
                     vdp.buffer = vdp.vram[vdp.addr & 0x3FFF];
                     vdp.addr = (vdp.addr + 1) & 0x3FFF;
                 }
-        
+
                 if(vdp.code == 2)
                 {
                     int r = (data & 0x07);

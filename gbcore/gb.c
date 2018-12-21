@@ -63,11 +63,11 @@ void gb_init(void)
 	#ifdef CHEAT_SUPPORT
 		cheat_init();
 	#endif
-	
+
 	apu_reset();
 	mbc_reset();
 	//target=NULL;
-	
+
 	gbe_init();
 
 	gb_reset();
@@ -79,7 +79,7 @@ void gb_init(void)
 void gb_reset()
 {
 	set_gb_type();
-	
+
 	g_regs.SC=0;
 	g_regs.DIV=0;
 	g_regs.TIMA=0;
@@ -98,26 +98,26 @@ void gb_reset()
 	g_regs.WX=0;
 	g_regs.IF=0;
 	g_regs.IE=0;
-	
+
 	cpu_irq_check();
-	
+
 //	memset(&c_regs,0,sizeof(c_regs));
-	
+
 	cpu_reset();
 	lcd_reset();
 	apu_reset();
 	mbc_reset();
 	sgb_reset();
-	
+
 	gbe_reset();
-	
+
 	gb_fill_vframe(0);
-	
+
 //	now_frame=0;
 	gbSkip=0;
 	//skip_buf=0;
 	re_render=0;
-	
+
 //	char *gb_names[]={"Invalid","Gameboy","SuperGameboy","Gameboy Color","Gameboy Advance"};
 //	if (m_rom->get_loaded())
 //		renderer_output_log("Current GB Type : %s \n",gb_names[m_rom->get_info()->gb_type]);
@@ -214,7 +214,7 @@ void gb_save_state(VIRTUAL_FILE *fd, byte *buf)
 		byte resurved[256];
 		memset(resurved,0,256);
 		write_state(fd, resurved,256);//è´óàÇÃÇΩÇﬂÇ…ämï€
-		
+
 		// RINägí£
 		if(now_gb_mode==2){
 			write_state(fd, &sgb_mode, sizeof(int));
@@ -228,7 +228,7 @@ void gb_save_state(VIRTUAL_FILE *fd, byte *buf)
 			write_state(fd, &sgb_nextcontrol, sizeof(int));
 			write_state(fd, &sgb_readingcontrol, sizeof(int));
 			write_state(fd, &sgb_mask, sizeof(int));
-			
+
 			write_state(fd, sgb_palette, sizeof(unsigned short)*8*16);
 			write_state(fd, sgb_palette_memory, sizeof(unsigned short)*512*4);
 			write_state(fd, sgb_buffer, 7*16);
@@ -237,7 +237,7 @@ void gb_save_state(VIRTUAL_FILE *fd, byte *buf)
 			/*
 			sceIoWrite(fd, sgb_border, 2048);
 			sceIoWrite(fd, sgb_borderchar, 32*256);
-			
+
 			int i, j, n=0;
 			for (i=0; i<224; i++){
 				for (j=0; j<256; j++){
@@ -326,11 +326,11 @@ void gb_restore_state(VIRTUAL_FILE *fd, const byte *buf)
 {
 	const int tbl_ram[]={1,1,1,4,16,8}; // 0Ç∆1ÇÕï€åØ
 	int gb_type,dmy;
-	
+
 	read_state(fd, &gb_type, sizeof(int));
-	
+
 	rom_get_info()->gb_type=gb_type;
-	
+
 	if (gb_type<=2){
 		read_state(fd, cpu_get_ram(),0x2000); // ram
 		read_state(fd, cpu_get_vram(),0x2000); // vram
@@ -372,7 +372,7 @@ void gb_restore_state(VIRTUAL_FILE *fd, const byte *buf)
 
 		byte resurved[256];
 		read_state(fd, resurved, 256);//è´óàÇÃÇΩÇﬂÇ…ämï€
-		
+
 		// RINägí£
 		if(gb_type==2 && sgb_mode){
 			int dmy;
@@ -388,7 +388,7 @@ void gb_restore_state(VIRTUAL_FILE *fd, const byte *buf)
 			read_state(fd, &sgb_nextcontrol, sizeof(int));
 			read_state(fd, &sgb_readingcontrol, sizeof(int));
 			read_state(fd, &sgb_mask, sizeof(int));
-			
+
 			read_state(fd, sgb_palette, sizeof(unsigned short)*8*16);
 			read_state(fd, sgb_palette_memory, sizeof(unsigned short)*512*4);
 			read_state(fd, sgb_buffer, 7*16);

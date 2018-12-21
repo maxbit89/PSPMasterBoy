@@ -45,7 +45,7 @@ inline void op_code_normal_case0xEA(void) { cpu_write(op_readw(),REG_A);}//LD (m
 
 inline void op_code_normal_case0xF0(void) { REG_A=cpu_read(0xFF00+op_read());}//LDH A,(n)
 inline void op_code_normal_case0xF2(void) { REG_A=cpu_read(0xFF00+REG_C);}//LDH A,(c)
-inline void op_code_normal_case0xF8(void) { REG_HL=REG_SP+(signed char)op_read();}//LD HL,SP+n 
+inline void op_code_normal_case0xF8(void) { REG_HL=REG_SP+(signed char)op_read();}//LD HL,SP+n
 inline void op_code_normal_case0xFA(void) { REG_A=cpu_read(op_readw());}//LD A,(mn);
 
 // 8bit load op_code
@@ -338,8 +338,8 @@ inline void op_code_normal_case0x27(void) {//DAA :state 4
         (REG_F&H_FLAG)?
           ((REG_A<0xA0)? 0x0600:(0x6600+C_FLAG)):
           (
-            (tmp.b.h<0x0A)? 
-              ((REG_A<0xA0)? 0x0000:(0x6000+C_FLAG)): 
+            (tmp.b.h<0x0A)?
+              ((REG_A<0xA0)? 0x0000:(0x6000+C_FLAG)):
 	      ((REG_A<0x90)? 0x0600:(0x6600+C_FLAG))
           )
       )
@@ -402,11 +402,11 @@ inline void op_code_normal_case0x76(void) {
 		REG_PC--;
 	}
 	tmp_clocks=0;
-	cpu_irq_check(); 
+	cpu_irq_check();
 #else
 	halt=true;
 	REG_PC--;
-	cpu_irq_check(); 
+	cpu_irq_check();
 #endif
 } //HALT : state 4
 
@@ -427,7 +427,7 @@ inline void op_code_normal_case0xCA(void) { if (REG_F&Z_FLAG) { REG_PC=op_readw(
 inline void op_code_normal_case0xD2(void) { if (REG_F&C_FLAG) REG_PC+=2; else { REG_PC=op_readw();tmp_clocks=16; };} // JPNC mn
 inline void op_code_normal_case0xDA(void) { if (REG_F&C_FLAG) { REG_PC=op_readw();tmp_clocks=16; } else REG_PC+=2;;} // JPC mn
 
-inline void op_code_normal_case0xE9(void) { REG_PC=REG_HL;} //JP HL : state 4 
+inline void op_code_normal_case0xE9(void) { REG_PC=REG_HL;} //JP HL : state 4
 inline void op_code_normal_case0x18(void) { REG_PC+=(signed char)op_read();}//JR e : state 12
 
 //JR cc,e : 00 1cc 000 : state 12(not jumped ->8)

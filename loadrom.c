@@ -10,7 +10,7 @@ extern uLong sram_crc;
 char game_name[PATH_MAX];
 
 typedef struct {
-    uint32_t crc;
+    uint32 crc;
 	int mode;
     int mapper;
     int display;
@@ -30,7 +30,7 @@ enum		{
     {0xB9664AE1, MAPPER_CODIES, DISPLAY_PAL, TERRITORY_EXPORT, "Fantastic Dizzy"},
     {0xA577CE46, MAPPER_CODIES, DISPLAY_PAL, TERRITORY_EXPORT, "Micro Machines"},
     {0x8813514B, MAPPER_CODIES, DISPLAY_PAL, TERRITORY_EXPORT, "Excellent Dizzy (Proto)"},
-    {0xAA140C9C, MAPPER_CODIES, DISPLAY_PAL, TERRITORY_EXPORT, "Excellent Dizzy (Proto - GG)"}, 
+    {0xAA140C9C, MAPPER_CODIES, DISPLAY_PAL, TERRITORY_EXPORT, "Excellent Dizzy (Proto - GG)"},
     {-1        , -1  , NULL},
 };*/
 
@@ -40,7 +40,7 @@ rominfo_t game_list[] = {
 	{0x59840fd6, MODE_SMS, MAPPER_NORMAL, DISPLAY_NTSC, "Castle of Illusion [SMS-GG]"},
 
 	{0x7bb81e3d, MODE_GG, MAPPER_NORMAL, DISPLAY_PAL, "Taito Chase H.Q. [SMS-GG]"},
-	{0xda8e95a9, MODE_GG, MAPPER_NORMAL, DISPLAY_NTSC, "WWF Wrestlemania Steel Cage Challenge [SMS-GG]"}, 
+	{0xda8e95a9, MODE_GG, MAPPER_NORMAL, DISPLAY_NTSC, "WWF Wrestlemania Steel Cage Challenge [SMS-GG]"},
 	{0xcb42bd33, MODE_GG, MAPPER_NORMAL, DISPLAY_NTSC, "WWF Wrestlemania Steel Cage Challenge [SMS-GG]"}, // bad dump
 	{0x5877b10d, MODE_GG, MAPPER_NORMAL, DISPLAY_NTSC, "Castle of Illusion [SMS-GG] [Hack]"}, // hack
 	{0x44fbe8f6, MODE_GG, MAPPER_NORMAL, DISPLAY_PAL, "Taito Chase H.Q. [SMS-GG] [Hack]"}, // hack

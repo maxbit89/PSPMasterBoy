@@ -176,7 +176,7 @@ void set_gb_type()
 				lcd_set_mpal(PAL_STANDARD);
 				break;
 			}
-		
+
 			if (rom_get_info()->gb_type>=3 && org_gbtype==3)
 				now_gb_mode = 3;
 			else if(rom_get_info()->gb_type==2 && sgb_mode)
@@ -236,7 +236,7 @@ void render_screen(void *buf)
 		pgFillBox(0,263,479,271,0);
 		render_msg_mode--;
 	}
-	
+
 	switch(setting.screensize){
 		case SCR_X1:
 			if (border_uploaded && now_gb_mode==2){
@@ -266,7 +266,7 @@ void render_screen(void *buf)
 		case SCR_FULL:
 			pgBitBltStFull(0,0,GBHEIGHT,3,(unsigned short *)buf);
 			break;
-#ifdef USE_GPU	
+#ifdef USE_GPU
 		case SCR_X15_BL:
 			pgBitBltGe(120,28,240,216,buf);
 			break;
@@ -280,7 +280,7 @@ void render_screen(void *buf)
 		default:
 			pgBitBltN1(160,64,(unsigned long *)buf);
 	}
-	
+
 	if(render_msg_mode>=3){
 		pgPrint_drawbg(0,33,0xffff,0,render_msg);
 		if (sceKernelLibcClock() > render_msg_time + 1000000)
@@ -308,7 +308,7 @@ void renderer_update_pad()
 	static int bPad=0;
 	int pad_state_bak;
 	char tmp[256];
-	
+
 	pad_state=0;
 	sceCtrlPeekBufferPositive(&paddata, 1);
 	//sceCtrlReadBufferPositive(&paddata, 1);
@@ -328,7 +328,7 @@ void renderer_update_pad()
 	if(paddata.buttons & CTRL_UP)    pad_state|=32;
 	if(paddata.buttons & CTRL_LEFT)  pad_state|=64;
 	if(paddata.buttons & CTRL_RIGHT) pad_state|=128;
-	
+
 	// kmg
 	// Analog pad state
 	if(setting.analog2dpad){
@@ -337,7 +337,7 @@ void renderer_update_pad()
 		if (paddata.analog[CTRL_ANALOG_X] < LOWER_THRESHOLD) pad_state|=0x40; // LEFT
 		if (paddata.analog[CTRL_ANALOG_X] > UPPER_THRESHOLD) pad_state|=0x80; // RIGHT
 	}
-	
+
 	int n = get_nShortcutKey(paddata.buttons);
 	if(n == -1)
 		bPad = 1;
@@ -346,7 +346,7 @@ void renderer_update_pad()
 		bPad = 0;
 		pad_state_bak = pad_state;
 		pad_state=0;
-		
+
 		switch(n)
 		{
 		case -1:
@@ -479,7 +479,7 @@ void renderer_init()
 	cur_time=0;
 	render_msg[0]=0;
 	render_msg_mode=0;
-	
+
 	renderer_reset();
 }
 

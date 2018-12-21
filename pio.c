@@ -20,7 +20,7 @@ void pio_init(void)
             io_lut[j][i].tr_dir[0]   = (i & 0x01) ? PIN_DIR_IN : PIN_DIR_OUT;
             io_lut[j][i].th_dir[0]   = (i & 0x02) ? PIN_DIR_IN : PIN_DIR_OUT;
             io_lut[j][i].tr_dir[1]   = (i & 0x04) ? PIN_DIR_IN : PIN_DIR_OUT;
-            io_lut[j][i].th_dir[1]   = (i & 0x08) ? PIN_DIR_IN : PIN_DIR_OUT; 
+            io_lut[j][i].th_dir[1]   = (i & 0x08) ? PIN_DIR_IN : PIN_DIR_OUT;
 
             if(j == 1)
             {
@@ -71,15 +71,15 @@ void system_assign_device(int port, int type)
     sms.device[port].type = type;
 }
 
-void ioctrl_w(uint8_t data)
+void ioctrl_w(uint8 data)
 {
     sms.ioctrl = data;
     io_current = &io_lut[sms.territory][data];
 }
 
-uint8_t device_r(int offset)
+uint8 device_r(int offset)
 {
-    uint8_t temp = 0x7F;
+    uint8 temp = 0x7F;
 
     switch(sms.device[offset].type)
     {
@@ -94,9 +94,9 @@ uint8_t device_r(int offset)
     return temp;
 }
 
-uint8_t input_r(int offset)
+uint8 input_r(int offset)
 {
-    uint8_t temp = 0xFF;
+    uint8 temp = 0xFF;
 
     /*
         If I/O chip is disabled, reads return last byte of instruction that
@@ -119,7 +119,7 @@ uint8_t input_r(int offset)
 
         if(sms.console == CONSOLE_GG)
         {
-            uint8_t state = sio_r(0x01);
+            uint8 state = sio_r(0x01);
             temp = (temp & 0x3F) | (state & 0x03) << 6; /* Insert D1,D0 */
         }
         else
@@ -139,7 +139,7 @@ uint8_t input_r(int offset)
         /* Input port #1 */
         if(sms.console == CONSOLE_GG)
         {
-            uint8_t state = sio_r(0x01);
+            uint8 state = sio_r(0x01);
             temp = (temp & 0xF0) | ((state & 0x3C) >> 2); /* Insert TR,TL,D3,D2 */
             temp = (temp & 0x7F) | ((state & 0x40) << 1); /* Insert TH */
         }
@@ -155,7 +155,7 @@ uint8_t input_r(int offset)
                 temp &= ~0x08;
                 temp |= (io_current->tr_level[1] == PIN_LVL_HI) ? 0x08 : 0x00;
             }
-        
+
             /* Adjust TH state if it is an output */
             if(io_current->th_dir[1] == PIN_DIR_OUT) {
                 temp &= ~0x80;
@@ -178,9 +178,9 @@ uint8_t input_r(int offset)
     return temp;
 }
 
-uint8_t sio_r(int offset)
+uint8 sio_r(int offset)
 {
-    uint8_t temp;
+    uint8 temp;
 
     switch(offset & 0xFF)
     {
@@ -248,7 +248,7 @@ void sio_w(int offset, int data)
         case 5: /* Serial control */
             sms.sio.sctrl = data & 0xF8;
             return;
-        
+
         case 6: /* Stereo output control */
             psg_stereo_w(data);
             return;

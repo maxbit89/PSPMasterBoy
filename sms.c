@@ -7,8 +7,8 @@
 /* SMS context */
 sms_t sms;
 
-uint8_t dummy_write[0x400];
-uint8_t dummy_read[0x400];
+uint8 dummy_write[0x400];
+uint8 dummy_read[0x400];
 
 void writemem_mapper_none(int offset, int data)
 {
@@ -76,7 +76,7 @@ void sms_init(void)
             cpu_writeport16 = smsj_port_w;
             cpu_readport16 = smsj_port_r;
             break;
-  
+
         case CONSOLE_SMS2:
             cpu_writeport16 = sms_port_w;
             cpu_readport16 = sms_port_r;
@@ -158,7 +158,7 @@ void sms_mapper_w(int address, int data)
     int i;
 
     /* Calculate ROM page index */
-    uint8_t page = (data % cart.pages);
+    uint8 page = (data % cart.pages);
 
     /* Save frame control register data */
     cart.fcr[address] = data;
@@ -168,7 +168,7 @@ void sms_mapper_w(int address, int data)
         case 0:
             if(data & 8)
             {
-                uint32_t offset = (data & 4) ? 0x4000 : 0x0000;
+                uint32 offset = (data & 4) ? 0x4000 : 0x0000;
                 sms.save = 1;
 
                 for(i = 0x20; i <= 0x2F; i++)
@@ -179,7 +179,7 @@ void sms_mapper_w(int address, int data)
             else
             {
                 for(i = 0x20; i <= 0x2F; i++)
-                {          
+                {
                     cpu_readmap[i] = &cart.rom[((cart.fcr[3] % cart.pages) << 14) | ((i & 0x0F) << 10)];
                     cpu_writemap[i] = dummy_write;
                 }

@@ -10,11 +10,11 @@
 #include <math.h>
 #include <limits.h>
 #include <zlib.h>
-#include <psptypes.h>
 
 #define MAX_PATH 1024
 #define PATH_MAX MAX_PATH
 
+#include "types.h"
 #include "macros.h"
 #include "z80.h"
 #include "sms.h"

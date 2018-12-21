@@ -66,8 +66,8 @@ void VideoGuInit(void)
 		oslInitConsole();
 		oslStartDrawing();
 		oslEndDrawing();
-		oslShowSplashScreen(2);
-		oslShowSplashScreen(1);
+		// oslShowSplashScreen(2);
+		// oslShowSplashScreen(1);
 		VideoGuScreenClear();
 
 		//Main screen: in VRAM for speed
@@ -131,7 +131,7 @@ void VideoGuUpdate_Core(int fullScreen, int mustClear)		{
 		int x = (480 - bitmap.viewport.w) / 2, y = (272 - bitmap.viewport.h) / 2;
 #ifdef SKIP_BORDERS
 		int add = cutBorders ? 1 : 0;
-		pspScaleImage((char *)Screen.scrBuffer, 
+		pspScaleImage((char *)Screen.scrBuffer,
 						bitmap.viewport.x,
 						bitmap.viewport.y,
 						bitmap.viewport.x + bitmap.viewport.w,
@@ -139,7 +139,7 @@ void VideoGuUpdate_Core(int fullScreen, int mustClear)		{
 						256,
 						x, y, x + bitmap.viewport.w - add, y + bitmap.viewport.h - add, mustClear, cutBorders);
 #else
-		pspScaleImage((char *)Screen.scrBuffer, 
+		pspScaleImage((char *)Screen.scrBuffer,
 						bitmap.viewport.x,
 						bitmap.viewport.y,
 						bitmap.viewport.x + bitmap.viewport.w,
@@ -147,12 +147,12 @@ void VideoGuUpdate_Core(int fullScreen, int mustClear)		{
 						256,
 						x, y, x + bitmap.viewport.w, y + bitmap.viewport.h, mustClear, cutBorders);
 #endif
-	} 
+	}
 	//2x
 	else if (fullScreen == 1)
 	{
 		int x = 480 / 2 - bitmap.viewport.w, y = 272 / 2 - bitmap.viewport.h;
-		pspScaleImage((char *)Screen.scrBuffer, 
+		pspScaleImage((char *)Screen.scrBuffer,
 						bitmap.viewport.x,
 						bitmap.viewport.y,
 						bitmap.viewport.x + bitmap.viewport.w,
@@ -166,7 +166,7 @@ void VideoGuUpdate_Core(int fullScreen, int mustClear)		{
 		int scale = min((4096 * 480) / bitmap.viewport.w, (4096 * 272) / bitmap.viewport.h);
 		int x = 480 / 2 - (((bitmap.viewport.w * scale) >> 12) / 2),
 			y = 272 / 2 - (((bitmap.viewport.h * scale) >> 12) / 2);
-		pspScaleImage((char *)Screen.scrBuffer, 
+		pspScaleImage((char *)Screen.scrBuffer,
 						bitmap.viewport.x,
 						bitmap.viewport.y,
 						bitmap.viewport.x + bitmap.viewport.w,
@@ -182,7 +182,7 @@ void VideoGuUpdate_Core(int fullScreen, int mustClear)		{
 		int scaleX = (scaleY + (4096 * 480) / bitmap.viewport.w) / 2;
 		int x = 480 / 2 - (((bitmap.viewport.w * scaleX) >> 12) / 2),
 			y = 272 / 2 - (((bitmap.viewport.h * scaleY) >> 12) / 2);
-		pspScaleImage((char *)Screen.scrBuffer, 
+		pspScaleImage((char *)Screen.scrBuffer,
 						bitmap.viewport.x,
 						bitmap.viewport.y,
 						bitmap.viewport.x + bitmap.viewport.w,
@@ -195,7 +195,7 @@ void VideoGuUpdate_Core(int fullScreen, int mustClear)		{
 	else if (fullScreen == 5)
 	{
 		int x = 480 / 2 - (3 * bitmap.viewport.w) / 4, y = 272 / 2 - (3 * bitmap.viewport.h) / 4;
-		pspScaleImage((char *)Screen.scrBuffer, 
+		pspScaleImage((char *)Screen.scrBuffer,
 						bitmap.viewport.x,
 						bitmap.viewport.y,
 						bitmap.viewport.x + bitmap.viewport.w,
@@ -207,7 +207,7 @@ void VideoGuUpdate_Core(int fullScreen, int mustClear)		{
 	//Full
 	else
 	{
-		pspScaleImage((char *)Screen.scrBuffer, 
+		pspScaleImage((char *)Screen.scrBuffer,
 						bitmap.viewport.x,
 						bitmap.viewport.y,
 						bitmap.viewport.x + bitmap.viewport.w,
@@ -343,7 +343,7 @@ void HSLToRGB(unsigned h, unsigned s, unsigned l,
 }
 
 
-uint16_t MAKE_COLOR(uint8_t r, uint8_t g, uint8_t b)		{
+uint16 MAKE_COLOR(uint8 r, uint8 g, uint8 b)		{
 	if (menuConfig.video.vibrance == 128)
 		return MAKE_PIXEL(r, g, b);
 	else if (menuConfig.video.vibrance > 128)			{
@@ -396,10 +396,10 @@ uint16_t MAKE_COLOR(uint8_t r, uint8_t g, uint8_t b)		{
 
 void RecolorPaletteVibrance()		{
 	unsigned h, s, l;
-	uint8_t r, g, b;
+	uint8 r, g, b;
 	int i;
 	int coeff, coeff2;
-	
+
 	coeff = 256 - menuConfig.video.vibrance;
 	coeff2 = (256 - menuConfig.video.vibrance) / 2 + 64;
 
@@ -437,10 +437,10 @@ void RecolorPaletteVibrance()		{
 
 void RecolorPaletteGray()		{
 	unsigned h, s, l;
-	uint8_t r, g, b;
+	uint8 r, g, b;
 	int i;
 	int coeff, value;
-	
+
 	coeff = menuConfig.video.vibrance;
 
 	for(i=0; i<PALETTE_SIZE; i++)
@@ -466,7 +466,7 @@ void RecolorPaletteGray()		{
 
 //Faster, but doesn't support the vibrance control effects
 void RecolorPalette()		{
-	uint8_t r, g, b;
+	uint8 r, g, b;
 	int i;
 
 	for(i=0; i<PALETTE_SIZE; i++)
@@ -489,10 +489,10 @@ void RecolorPalette()		{
 
 //clear = -1: ne surtout pas clearer! 0: le choix, 1 = toujours
 #ifdef SKIP_BORDERS
-void pspScaleImage_core(char *pixels, int srcX0, int srcY0, int srcX1, int srcY1, 
+void pspScaleImage_core(char *pixels, int srcX0, int srcY0, int srcX1, int srcY1,
 				   int srcPitch, int dstX0, int dstY0, int dstX1, int dstY1, int clear, int cutborders)
 #else
-void pspScaleImage_core(char *pixels, int srcX0, int srcY0, int srcX1, int srcY1, 
+void pspScaleImage_core(char *pixels, int srcX0, int srcY0, int srcX1, int srcY1,
 				   int srcPitch, int dstX0, int dstY0, int dstX1, int dstY1, int clear)
 #endif
 {
@@ -556,7 +556,7 @@ void pspScaleImage_core(char *pixels, int srcX0, int srcY0, int srcX1, int srcY1
 //		sceKernelDcacheWritebackInvalidateRange(pixels, 256 * 256 * 2);
 		sceGuTexMode(GU_PSM_5551,0,0,0);
 	}
-	
+
 	sceGuTexImage(0,256,256,srcPitch,oslGetCachedPtr(pixels));
 	//So that OSLib knows that the texture should be reloaded
 	osl_curTexture = NULL;
@@ -601,7 +601,7 @@ void pspScaleImage_core(char *pixels, int srcX0, int srcY0, int srcX1, int srcY1
 #else
 		vertices[k].u = min(j+SLICE_SIZE, srcX1); vertices[k].v = srcY0 + FIRST_LINE_SIZE;
 #endif
-		vertices[k].x = min(x+slice_scale, dstX1); vertices[k].y = dstY0+slice_scaley; 
+		vertices[k].x = min(x+slice_scale, dstX1); vertices[k].y = dstY0+slice_scaley;
 		vertices[k].z = 0;
 
 		//Plus bas
@@ -610,7 +610,7 @@ void pspScaleImage_core(char *pixels, int srcX0, int srcY0, int srcX1, int srcY1
 #else
 		vertices[k+totalSlices].u = min(j+SLICE_SIZE, srcX1); vertices[k+totalSlices].v = srcY1;
 #endif
-		vertices[k+totalSlices].x = min(x+slice_scale, dstX1); vertices[k+totalSlices].y = dstY1; 
+		vertices[k+totalSlices].x = min(x+slice_scale, dstX1); vertices[k+totalSlices].y = dstY1;
 		vertices[k+totalSlices].z = 0;
 		k++;
 	}
@@ -632,7 +632,7 @@ void pspScaleImage_core(char *pixels, int srcX0, int srcY0, int srcX1, int srcY1
 		k++;
 
 		vertices[k].u = min(j+SLICE_SIZE, srcX1); vertices[k].v = srcY1;
-		vertices[k].x = min(x+slice_scale, dstX1); vertices[k].y = dstY1; 
+		vertices[k].x = min(x+slice_scale, dstX1); vertices[k].y = dstY1;
 		vertices[k].z = 0;
 		k++;
 	}

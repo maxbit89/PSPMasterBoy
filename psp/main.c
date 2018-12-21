@@ -163,7 +163,7 @@ int main(int argc, char *argp[])
 
 	// Need to copy this across otherwise the address is in kernel mode
 /*	strcpy (startPath, (char*)argp[0]);
-	
+
 	//Delete the file name after the slash
 	for (i=strlen(startPath) - 1; i >= 0; i--)		{
 		if (startPath[i] == '\\' || startPath[i] == '/')		{

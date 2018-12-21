@@ -40,12 +40,12 @@ void SoundInit(void)
 			memset(audioOut, 0, 2*2048*sizeof(sample_t));
 
 			soundRunning = 1;
-			sndThid = sceKernelCreateThread("SoundThread", SoundThread, 0x11, 0xFA0, 0, 0); 
+			sndThid = sceKernelCreateThread("SoundThread", SoundThread, 0x11, 0xFA0, 0, 0);
 
 			if(sndThid<0)
 				return;
 
-			sceKernelStartThread(sndThid,0,0);  
+			sceKernelStartThread(sndThid,0,0);
 			soundInited = 1;
 		}
 	}
@@ -70,7 +70,7 @@ void SoundUpdate(void)
 	{
 		int i, j = 0;
 
-		for(i = 0; i < snd.sample_count; ++i) 
+		for(i = 0; i < snd.sample_count; ++i)
 		{
 			audioOutTemp[nbreSamples].l = snd.output[j++];
 			audioOutTemp[nbreSamples].r = snd.output[j++];
@@ -85,7 +85,7 @@ void SoundUpdate(void)
 void SoundPause(void)
 {
 	soundPause = 1;
-	
+
 	//sceKernelSuspendThread(sndThid);
 }
 

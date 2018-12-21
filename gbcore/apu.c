@@ -171,7 +171,7 @@ void snd_process(word adr,byte dat)
 	const char div_t[]={1,1,2,3,4,5,6,7};
 	const short div_t2[]={2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,1,1};
 	*/
-	const int noi_freq_tbl[] = 
+	const int noi_freq_tbl[] =
 	{
 		0x00080000,0x00040000,0x00020000,0x00015555,0x00010000,0x0000CCCC,0x0000AAAA,0x00009249,
 		0x00080000,0x00040000,0x00020000,0x00015555,0x00010000,0x0000CCCC,0x0000AAAA,0x00009249,
@@ -599,7 +599,7 @@ void snd_render(short *buf1, short *buf2, int sample)
 		if ( snd_que_count>cur && (now_time>snd_write_que[cur].clock) ){
 			snd_process(snd_write_que[cur].adr,snd_write_que[cur].dat);
 			cur++;
-			
+
 			sq1_freq = 131072/(2048-(snd_stat.sq1_freq&0x7FF));
 			sq2_freq = 131072/(2048-(snd_stat.sq2_freq&0x7FF));
 			wav_freq = (65536/(2048-(snd_stat.wav_freq&0x7FF))) << 5;
@@ -647,7 +647,7 @@ void snd_render(short *buf1, short *buf2, int sample)
 
 			//tmp_l = tmp_l * snd_stat.master_vol[0] / 160;
 			//tmp_r = tmp_r * snd_stat.master_vol[1] / 160;
-			
+
 			/*
 			if (snd_b_lowpass){
 				// 出力をフィルタリング
@@ -721,7 +721,7 @@ void snd_render_orig(short *buf,int sample)
 		if ( snd_que_count>cur && (now_time>snd_write_que[cur].clock) ){
 			snd_process(snd_write_que[cur].adr,snd_write_que[cur].dat);
 			cur++;
-			
+
 			sq1_freq = 131072/(2048-(snd_stat.sq1_freq&0x7FF));
 			sq2_freq = 131072/(2048-(snd_stat.sq2_freq&0x7FF));
 			wav_freq = (65536/(2048-(snd_stat.wav_freq&0x7FF))) << 5;
@@ -771,7 +771,7 @@ void snd_render_orig(short *buf,int sample)
 			*buf++ = tmp_r * curVolume1 >> 8;
 			//tmp_l = tmp_l * snd_stat.master_vol[0] / 160;
 			//tmp_r = tmp_r * snd_stat.master_vol[1] / 160;
-			
+
 			/*
 			if (snd_b_lowpass){
 				// 出力をフィルタリング

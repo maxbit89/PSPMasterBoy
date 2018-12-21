@@ -201,7 +201,7 @@ const unsigned int DT_DEF_TAB[4 * 32] =
 };
 
 const unsigned int FKEY_TAB[16] =
-{ 
+{
 	0, 0, 0, 0,
 	0, 0, 0, 1,
 	2, 3, 3, 3,
@@ -257,7 +257,7 @@ int YM_Len = 0;
 INLINE void CALC_FINC_SL(slot_ *SL, int finc, int kc)
 {
 	int ksr;
-	
+
 	SL->Finc = (finc + SL->DT[kc]) * SL->MUL;
 
 	ksr = kc >> SL->KSR_S;	// keycode atténuation
@@ -293,7 +293,7 @@ INLINE void CALC_FINC_SL(slot_ *SL, int finc, int kc)
 INLINE void CALC_FINC_CH(channel_ *CH)
 {
 	int finc, kc;
-	
+
 	finc = FINC_TAB[CH->FNUM[0]] >> (7 - CH->FOCT[0]);
 	kc = CH->KC[0];
 
@@ -313,13 +313,13 @@ INLINE void CALC_FINC_CH(channel_ *CH)
 INLINE void KEY_ON(channel_ *CH, int nsl)
 {
 	slot_ *SL = &(CH->SLOT[nsl]);	// on recupère le bon pointeur de slot
-	
+
 	if (SL->Ecurp == RELEASE)		// la touche est-elle relâchée ?
 	{
 		SL->Fcnt = 0;
 
 		// Fix Ecco 2 splash sound
-		
+
 		SL->Ecnt = (DECAY_TO_ATTACK[ENV_TAB[SL->Ecnt >> ENV_LBITS]] + ENV_ATTACK) & SL->ChgEnM;
 		SL->ChgEnM = 0xFFFFFFFF;
 
@@ -336,7 +336,7 @@ INLINE void KEY_ON(channel_ *CH, int nsl)
 INLINE void KEY_OFF(channel_ *CH, int nsl)
 {
 	slot_ *SL = &(CH->SLOT[nsl]);	// on recupère le bon pointeur de slot
-	
+
 	if (SL->Ecurp != RELEASE)		// la touche est-elle appuyée ?
 	{
 		if (SL->Ecnt < ENV_DECAY)	// attack phase ?
@@ -477,9 +477,9 @@ int CHANNEL_SET(int Adr, unsigned char data)
 {
 	channel_ *CH;
 	int num;
-	
+
 	if ((num = Adr & 3) == 3) return 1;
-		
+
 	switch(Adr & 0xFC)
 	{
 		case 0xA0:
@@ -562,7 +562,7 @@ int CHANNEL_SET(int Adr, unsigned char data)
 				YM2612_Special_Update();
 
 				CH->ALGO = data & 7;
-				
+
 				CH->SLOT[0].ChgEnM = 0;
 				CH->SLOT[1].ChgEnM = 0;
 				CH->SLOT[2].ChgEnM = 0;
@@ -587,10 +587,10 @@ int CHANNEL_SET(int Adr, unsigned char data)
 
 			if (data & 0x80) CH->LEFT = 0xFFFFFFFF;
 			else CH->LEFT = 0;
-			
+
 			if (data & 0x40) CH->RIGHT = 0xFFFFFFFF;
 			else CH->RIGHT = 0;
-				
+
 			CH->AMS = LFO_AMS_TAB[(data >> 4) & 3];
 			CH->FMS = LFO_FMS_TAB[data & 7];
 
@@ -608,7 +608,7 @@ int CHANNEL_SET(int Adr, unsigned char data)
 #endif
 			break;
 	}
-	
+
 	return 0;
 }
 
@@ -747,7 +747,7 @@ int YM_SET(int Adr, unsigned char data)
 			YM2612.DAC = data & 0x80;	// activation/désactivation du DAC
 			break;
 	}
-	
+
 	return 0;
 }
 
@@ -872,7 +872,7 @@ CH->S0_OUT[0] = SIN_TAB[(in0 >> SIN_LBITS) & SIN_MASK][en0];
 in0 += (CH->S0_OUT[0] + (CH->S0_OUT[0] >> 2) + CH->S0_OUT[1]) >> CH->FB;	\
 CH->S0_OUT[1] = CH->S0_OUT[0] >> 2;											\
 CH->S0_OUT[0] = SIN_TAB[(in0 >> SIN_LBITS) & SIN_MASK][en0];
-		
+
 
 #define DO_FEEDBACK3																	\
 in0 += (CH->S0_OUT[0] + CH->S0_OUT[1] + CH->S0_OUT[2] + CH->S0_OUT[3]) >> CH->FB;		\
@@ -1731,7 +1731,7 @@ int YM2612_Init(int Clock, int Rate, int Interpolation)
 		YM2612.Inter_Cnt = 0;
 
 		// We recalculate rate and frequence after interpolation
-			
+
 		YM2612.Rate = YM2612.Clock / 144;
 		YM2612.Frequence = 1.0;
 	}
@@ -1768,13 +1768,13 @@ int YM2612_Init(int Clock, int Rate, int Interpolation)
 		fprintf(debug_file, "TL_TAB[%d] = %.8X    TL_TAB[%d] = %.8X\n", i, TL_TAB[i], TL_LENGHT + i, TL_TAB[TL_LENGHT + i]);
 #endif
 	}
-	
+
 #if YM_DEBUG_LEVEL > 2
 	fprintf(debug_file, "\n\n\n\n");
 #endif
 
 	// Tableau SIN :
-	// SIN_TAB[x][y] = sin(x) * y; 
+	// SIN_TAB[x][y] = sin(x) * y;
 	// x = phase and y = volume
 
 	SIN_TAB[0] = SIN_TAB[SIN_LENGHT / 2] = &TL_TAB[(int)PG_CUT_OFF];
@@ -1851,7 +1851,7 @@ int YM2612_Init(int Clock, int Rate, int Interpolation)
 	ENV_TAB[ENV_END >> ENV_LBITS] = ENV_LENGHT - 1;		// for the stopped state
 
 	// Tableau pour la conversion Attack -> Decay and Decay -> Attack
-	
+
 	for(i = 0, j = ENV_LENGHT - 1; i < ENV_LENGHT; i++)
 	{
 		while (j && (ENV_TAB[j] < (unsigned) i)) j--;
@@ -1860,7 +1860,7 @@ int YM2612_Init(int Clock, int Rate, int Interpolation)
 	}
 
 	// Tableau pour le Substain Level
-	
+
 	for(i = 0; i < 15; i++)
 	{
 		x = i * 3;					// 3 and not 6 (Mickey Mania first music for test)
@@ -1972,7 +1972,7 @@ int YM2612_End(void)
 int YM2612_Reset(void)
 {
 	int i, j;
-  
+
 #if YM_DEBUG_LEVEL > 0
 	fprintf(debug_file, "\n\nStarting reseting YM2612 ...\n\n");
 #endif
@@ -2074,10 +2074,10 @@ int YM2612_Read(void)
 int YM2612_Write(unsigned char adr, unsigned char data)
 {
 	int d;
-	
+
 	data &= 0xFF;
 	adr &= 0x3;
-	
+
 	switch(adr)
 	{
 		case 0:
@@ -2211,7 +2211,7 @@ void YM2612_Update(int **buf, int length)
 	if (YM2612.LFOinc)
 	{
 		// Precalcul LFO wav
-		
+
 		for(i = 0; i < length; i++)
 		{
 			j = ((YM2612.LFOcnt += YM2612.LFOinc) >> LFO_LBITS) & LFO_MASK;

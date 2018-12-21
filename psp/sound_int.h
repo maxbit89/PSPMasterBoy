@@ -45,7 +45,7 @@ public:
 		}
 		return 1;
 	}
-	
+
 	int new_block(int size)		{
 		//Don't keep original data
 		this->set_size(0);

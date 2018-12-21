@@ -317,42 +317,42 @@ namespace CODEC_GYM			{
 				tempStr[32] = '\0';
 				if (strcmp(tempStr, "") != 0)
 				{
-					info->meta_add_ansi((char*)"TITLE", tempStr);
+					info->meta_add_ansi("TITLE", tempStr);
 				}
 
 				memcpy(tempStr, gym_tag->game_title, 32);
 				tempStr[32] = '\0';
 				if (strcmp(tempStr, "") != 0)
 				{
-					info->meta_add_ansi((char*)"ALBUM", tempStr);
+					info->meta_add_ansi("ALBUM", tempStr);
 				}
 
 				memcpy(tempStr, gym_tag->game_publisher, 32);
 				tempStr[32] = '\0';
 				if (strcmp(tempStr, "") != 0)
 				{
-					info->meta_add_ansi((char*)"PUBLISHER", tempStr);
+					info->meta_add_ansi("PUBLISHER", tempStr);
 				}
 
 				memcpy(tempStr, gym_tag->dumper_emu, 32);
 				tempStr[32] = '\0';
 				if (strcmp(tempStr, "") != 0)
 				{
-					info->meta_add_ansi((char*)"EMULATOR", tempStr);
+					info->meta_add_ansi("EMULATOR", tempStr);
 				}
 
 				memcpy(tempStr, gym_tag->dumper_person, 32);
 				tempStr[32] = '\0';
 				if (strcmp(tempStr, "") != 0)
 				{
-					info->meta_add_ansi((char*)"DUMPER", tempStr);
+					info->meta_add_ansi("DUMPER", tempStr);
 				}
 
 				memcpy(tempStr, gym_tag->comments, 256);
 				tempStr[256] = '\0';
 				if (strcmp(tempStr, "") != 0)
 				{
-					info->meta_add_ansi((char*)"COMMENT", tempStr);
+					info->meta_add_ansi("COMMENT", tempStr);
 				}
 
 				gym_loop = gym_tag->looped;
@@ -360,7 +360,7 @@ namespace CODEC_GYM			{
 				if (gym_loop)
 				{
 					sprintf(tempStr, "%.2f seconds", gym_loop / 60.0);
-					info->meta_add_ansi((char*)"LOOPSAT", tempStr);
+					info->meta_add_ansi("LOOPSAT", tempStr);
 				}
 
 				if (gym_tag->compressed)
@@ -368,7 +368,7 @@ namespace CODEC_GYM			{
 					gym_compressed = true;
 					if (memcmp((char *)((int)gym_tag + sizeof(GYMTAG)), "EZPK", 4) == 0)
 					{
-						info->meta_add_ansi((char*)"COMPRESSION", (char*)"EZPK");
+						info->meta_add_ansi("COMPRESSION", "EZPK");
 
 						if (!gym_loaded)
 						{
@@ -379,7 +379,7 @@ namespace CODEC_GYM			{
 					}
 					else
 					{
-						info->meta_add_ansi((char*)"COMPRESSION", (char*)"ZLIB");
+						info->meta_add_ansi("COMPRESSION", "ZLIB");
 
 						if (!gym_loaded)
 						{
@@ -393,7 +393,7 @@ namespace CODEC_GYM			{
 				else
 				{
 					gym_compressed = false;
-					info->meta_add_ansi((char*)"COMPRESSION", (char*)"none");
+					info->meta_add_ansi("COMPRESSION", "none");
 
 					gym_start = (unsigned char *)gymFile + sizeof(GYMTAG);
 					gym_size = gym_backup.get_size() - sizeof(GYMTAG);
@@ -412,7 +412,7 @@ namespace CODEC_GYM			{
 				gym_loop = 0;
 
 				gym_compressed = false;
-				info->meta_add_ansi((char*)"COMPRESSION", (char*)"none");
+				info->meta_add_ansi("COMPRESSION", "none");
 
 				gym_start = (unsigned char *)gymFile;
 				gym_size = gym_backup.get_size();
@@ -424,8 +424,8 @@ namespace CODEC_GYM			{
 				}
 			}
 
-			info->info_set((char*)"codec", (char*)"GYM");
-			info->info_set((char*)"extrainfo", (char*)"GYM");
+			info->info_set("codec", "GYM");
+			info->info_set("extrainfo", "GYM");
 
 			return 1;
 		}

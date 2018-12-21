@@ -1,4 +1,4 @@
-/* 
+/*
     SN76489 emulation
     by Maxim in 2001 and 2002
     converted from my original Delphi implementation
@@ -96,19 +96,19 @@ void VGM_SN76489_Config(int which, int mute, int volume, int feedback, int sr_wi
     p->BoostNoise = boost_noise;
 }
 
-void VGM_SN76489_SetContext(int which, uint8_t *data)
+void VGM_SN76489_SetContext(int which, uint8 *data)
 {
     memcpy(&SN76489[which], data, sizeof(VGM_SN76489_Context));
 }
 
-void VGM_SN76489_GetContext(int which, uint8_t *data)
+void VGM_SN76489_GetContext(int which, uint8 *data)
 {
     memcpy(data, &SN76489[which], sizeof(VGM_SN76489_Context));
 }
 
-uint8_t *VGM_SN76489_GetContextPtr(int which)
+uint8 *VGM_SN76489_GetContextPtr(int which)
 {
-    return (uint8_t *)&SN76489[which];
+    return (uint8 *)&SN76489[which];
 }
 
 int VGM_SN76489_GetContextSize(void)
@@ -156,7 +156,7 @@ void VGM_SN76489_GGStereoWrite(int which, int data)
     p->PSGStereo=data;
 }
 
-void VGM_SN76489_Update(int which, int16_t **buffer, int length)
+void VGM_SN76489_Update(int which, INT16 **buffer, int length)
 {
     VGM_SN76489_Context *p = &SN76489[which];
     int i, j;
@@ -168,11 +168,11 @@ void VGM_SN76489_Update(int which, int16_t **buffer, int length)
                 p->Channels[i]=(short)((p->Mute >> i & 0x1)*PSGVolumeValues[p->VolumeArray][p->Registers[2*i+1]]*p->IntermediatePos[i]);
             else
                 p->Channels[i]=(p->Mute >> i & 0x1)*PSGVolumeValues[p->VolumeArray][p->Registers[2*i+1]]*p->ToneFreqPos[i];
-    
+
         p->Channels[3]=(short)((p->Mute >> 3 & 0x1)*PSGVolumeValues[p->VolumeArray][p->Registers[7]]*(p->NoiseShiftRegister & 0x1));
-    
+
         if (p->BoostNoise) p->Channels[3]<<=1; /* double noise volume */
-    
+
         buffer[0][j] =0;
         buffer[1][j] =0;
         for (i=0;i<=3;++i) {
@@ -196,7 +196,7 @@ void VGM_SN76489_Update(int which, int16_t **buffer, int length)
             buffer[1][j] += (p->PSGStereo >>  i    & 0x1)*p->Channels[i]; /* right */
           }
         }
-    
+
         p->Clock+=p->dClock;
         p->NumClocksForSample=(int)p->Clock;  /* truncates */
         p->Clock-=p->NumClocksForSample;  /* remove integer part */
@@ -204,15 +204,15 @@ void VGM_SN76489_Update(int which, int16_t **buffer, int length)
         /*  Clock:=Clock+p->dClock; */
         /*  NumClocksForSample:=Trunc(Clock); */
         /*  Clock:=Frac(Clock); */
-    
+
         /* Decrement tone channel counters */
         for (i=0;i<=2;++i)
             p->ToneFreqVals[i]-=p->NumClocksForSample;
-     
+
         /* Noise channel: match to tone2 or decrement its counter */
         if (p->NoiseFreq==0x80) p->ToneFreqVals[3]=p->ToneFreqVals[2];
         else p->ToneFreqVals[3]-=p->NumClocksForSample;
-    
+
         /* Tone channels: */
         for (i=0;i<=2;++i) {
             if (p->ToneFreqVals[i]<=0) {   /* If it gets below 0... */
@@ -229,7 +229,7 @@ void VGM_SN76489_Update(int which, int16_t **buffer, int length)
                 p->ToneFreqVals[i]+=p->Registers[i*2]*(p->NumClocksForSample/p->Registers[i*2]+1);
             } else p->IntermediatePos[i]=FLT_MIN;
         }
-    
+
         /* Noise channel */
         if (p->ToneFreqVals[3]<=0) {   /* If it gets below 0... */
             p->ToneFreqPos[3]=-p->ToneFreqPos[3]; /* Flip the flip-flop */
@@ -258,9 +258,9 @@ void VGM_SN76489_Update(int which, int16_t **buffer, int length)
                     }
                 } else      /* Periodic noise */
                     Feedback=p->NoiseShiftRegister&1;
-    
+
                 p->NoiseShiftRegister=(p->NoiseShiftRegister>>1) | (Feedback << (p->SRWidth-1));
-    
+
     /* Original code: */
     /*          p->NoiseShiftRegister=(p->NoiseShiftRegister>>1) | ((p->Registers[6]&0x4?((p->NoiseShiftRegister&0x9) && (p->NoiseShiftRegister&0x9^0x9)):p->NoiseShiftRegister&1)<<15); */
             }
@@ -270,8 +270,8 @@ void VGM_SN76489_Update(int which, int16_t **buffer, int length)
 
 void VGM_SN76489_UpdateOne(int which, int *l, int *r)
 {
-  int16_t tl,tr;
-  int16_t *buff[2]={&tl,&tr};
+  INT16 tl,tr;
+  INT16 *buff[2]={&tl,&tr};
   VGM_SN76489_Update(which,buff,1);
   *l=tl;
   *r=tr;

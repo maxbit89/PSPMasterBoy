@@ -1,11 +1,26 @@
 #ifndef _SN76489_H_
 #define _SN76489_H_
 
-#include <psptypes.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif /* #ifdef __cplusplus */
+
+#ifndef INT32
+#define INT32 signed long
+#endif
+#ifndef UINT16
+#define UINT16 unsigned short
+#endif
+#ifndef INT16
+#define INT16 signed short
+#endif
+#ifndef INT8
+#define INT8 signed char
+#endif
+#ifndef uint8
+#define uint8 signed char
+#endif
+
 
 #define MAX_SN76489     4
 
@@ -43,7 +58,7 @@ typedef struct
     int Mute; // per-channel muting
     int VolumeArray;
     int BoostNoise; // double noise volume when non-zero
-    
+
     /* Variables */
     float Clock;
     float dClock;
@@ -51,13 +66,13 @@ typedef struct
     int NumClocksForSample;
     int WhiteNoiseFeedback;
     int SRWidth;
-    
+
     /* PSG registers: */
     int Registers[8];        /* Tone, vol x4 */
     int LatchedRegister;
     int NoiseShiftRegister;
     int NoiseFreq;            /* Noise channel signal generator frequency */
-    
+
     /* Output calculation variables */
     int ToneFreqVals[4];      /* Frequency register values (counters) */
     int ToneFreqPos[4];        /* Frequency channel flip-flops */
@@ -73,13 +88,13 @@ void VGM_SN76489_Init(int which, int PSGClockValue, int SamplingRate);
 void VGM_SN76489_Reset(int which);
 void VGM_SN76489_Shutdown(void);
 void VGM_SN76489_Config(int which, int mute, int volume, int feedback, int sw_width, int boost_noise);
-void VGM_SN76489_SetContext(int which, uint8_t *data);
-void VGM_SN76489_GetContext(int which, uint8_t *data);
-uint8_t *VGM_SN76489_GetContextPtr(int which);
+void VGM_SN76489_SetContext(int which, uint8 *data);
+void VGM_SN76489_GetContext(int which, uint8 *data);
+uint8 *VGM_SN76489_GetContextPtr(int which);
 int VGM_SN76489_GetContextSize(void);
 void VGM_SN76489_Write(int which, int data);
 void VGM_SN76489_GGStereoWrite(int which, int data);
-void VGM_SN76489_Update(int which, int16_t **buffer, int length);
+void VGM_SN76489_Update(int which, INT16 **buffer, int length);
 
 /* Non-standard getters and setters */
 int  VGM_SN76489_GetMute(int which);

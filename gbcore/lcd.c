@@ -41,7 +41,7 @@ word m_pal16[2][3][4] = {
 		{0, 0, 0, 0},
 		{0, 0, 0, 0},
 		{0, 0, 0, 0} },
-		
+
 	{	//SGB
 		{0, 1, 2, 3}, {0, 1, 2, 3}, {0, 1, 2, 3}
 	}
@@ -89,12 +89,12 @@ void gb_invalidate_palette(int palNo);
 void lcd_init(void)
 {
 	n_mpal16 = 0;
-	
+
 	int i;
     for(i = 0; i < 32; i++)
     {
         unsigned char c = i << 3 | i >> 2;
-        gbc_cram_expand_table[i] = c;        
+        gbc_cram_expand_table[i] = c;
     }
 
 	lcd_reset();
@@ -626,7 +626,7 @@ static void lcd_sgb_render(void *buf,int scanline)
 	const int *tbl;
 	word *sdat=((word*)buf)+(scanline)*SIZE_LINE+GUARD_LINE;
 	byte *atf = &sgb_ATF[(scanline/8)*20];
-	
+
 	for(i=0; i<20; i++){
 		tbl = &sgb_palette_table[(*(atf++))<<2];
 		/*
@@ -654,7 +654,7 @@ static void lcd_sgb_render(void *buf,int scanline)
 void lcd_render(void *buf,int scanline)
 {
 	sprite_count=0;
-	
+
 	switch(now_gb_mode)
 	{
 	case 3:
@@ -666,7 +666,7 @@ void lcd_render(void *buf,int scanline)
 
 	case 2:
 //		n_mpal16 = PAL_SGB;
-		
+
 		//Pour le SGB comme on fera plusieurs accès (dont un r/w dans lcd_sgb_render), le cache vaut la peine
 		buf = oslGetCachedPtr(buf);
 		sgb_recreate_colors();
@@ -753,7 +753,7 @@ static void gb_recreate_colors()		{
 			}
 		}
 
-		//Palette pour le mode noir & blanc - pas besoin de le faire toujours mais 
+		//Palette pour le mode noir & blanc - pas besoin de le faire toujours mais
 		for (i=0;i<12;i++)		{
 			word col = oslConvertColor(OSL_PF_5551, OSL_PF_8888, currentPalCache[i]);
 			m_pal16[0][0][i] = CONVERT_COLOR15(col);

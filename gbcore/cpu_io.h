@@ -49,7 +49,7 @@ static byte cpu_io_read_00( word adr )
 			}
 			*/
 		}
-		
+
 		byte tmp=pad_state;
 		if (g_regs.P1==0x03)
 			return 0xff;
@@ -61,7 +61,7 @@ static byte cpu_io_read_00( word adr )
 		case 2:
 			return 0xE0|((tmp&0x80?0:1)|(tmp&0x40?0:2)|(tmp&0x20?0:4)|(tmp&0x10?0:8));
 		case 3:
-			if(now_gb_mode==2 && sgb_multiplayer) 
+			if(now_gb_mode==2 && sgb_multiplayer)
 				return 0xF0 | sgb_nextcontrol;
 			else
 				return 0xFF;
@@ -159,7 +159,7 @@ static byte cpu_io_read_53( word adr ){ return dma_dest>>8; }
 static byte cpu_io_read_54( word adr ){ return dma_dest&0xff; }
 static byte cpu_io_read_55( word adr ){ return (dma_executing?((dma_rest-1)&0x7f):0xFF); }
 static byte cpu_io_read_56( word adr )
-{ 
+{
 	// 赤外線
 	int bit, size;
 	unsigned long cur_time;
@@ -204,7 +204,7 @@ static byte cpu_io_read_67( word adr ){ ; }
 
 static byte cpu_io_read_68( word adr ){ return cg_regs.BCPS ; }
 static byte cpu_io_read_69( word adr )
-{ 
+{
 	byte ret ;
 
 		if (cg_regs.BCPS&1)
@@ -220,7 +220,7 @@ static byte cpu_io_read_69( word adr )
 }
 static byte cpu_io_read_6A( word adr ){ return cg_regs.OCPS; }
 static byte cpu_io_read_6B( word adr )
-{ 
+{
 	byte ret ;
 
 		if (cg_regs.OCPS&1)
@@ -387,7 +387,7 @@ static byte cpu_io_read_FE( word adr ){ ; }
 static byte cpu_io_read_FF( word adr ){ return g_regs.IE ; }
 
 
-byte (*cpu_io_read_JmpTbl[256])(word adr) = 
+byte (*cpu_io_read_JmpTbl[256])(word adr) =
 {
 cpu_io_read_00,cpu_io_read_01,cpu_io_read_02,cpu_io_read_03,
 cpu_io_read_04,cpu_io_read_05,cpu_io_read_06,cpu_io_read_07,
@@ -525,7 +525,7 @@ static void cpu_io_write_00( word adr,byte dat )
 }
 static void cpu_io_write_01( word adr,byte dat ){ g_regs.SB=dat; }
 static void cpu_io_write_02( word adr,byte dat )
-{ 
+{
 		if (rom_get_info()->gb_type<=2){
 			g_regs.SC=dat&0x81;
 			if ((dat&0x80)&&(dat&1)) // 送信開始
@@ -546,7 +546,7 @@ static void cpu_io_write_04( word adr,byte dat ){ g_regs.DIV=0; }
 static void cpu_io_write_05( word adr,byte dat ){ g_regs.TIMA=dat; }
 static void cpu_io_write_06( word adr,byte dat ){ g_regs.TMA=dat; }
 static void cpu_io_write_07( word adr,byte dat )
-{ 
+{
 		if ((dat&0x04)&&!(g_regs.TAC&0x04))
 			sys_clock=0;
 		g_regs.TAC=dat;
@@ -612,7 +612,7 @@ static void cpu_io_write_3E( word adr,byte dat ){ ; }
 static void cpu_io_write_3F( word adr,byte dat ){ ; }
 */
 static void cpu_io_write_40( word adr,byte dat )
-{ 
+{
 		if ((dat&0x80)&&(!(g_regs.LCDC&0x80))){
 			g_regs.LY=0;
 			lcd_clear_win_count();
@@ -621,7 +621,7 @@ static void cpu_io_write_40( word adr,byte dat )
 		g_regs.LCDC=dat;
 }
 static void cpu_io_write_41( word adr,byte dat )
-{ 
+{
 //		if (rom_get_info()->gb_type==1) // オリジナルGBにおいてこのような現象が起こるらしい
 		if (rom_get_info()->gb_type<=2)
 			if (!(g_regs.STAT&0x02))
@@ -635,41 +635,41 @@ static void cpu_io_write_43( word adr,byte dat ){ g_regs.SCX=dat; }
 static void cpu_io_write_44( word adr,byte dat ){ lcd_clear_win_count(); }
 static void cpu_io_write_45( word adr,byte dat ){ g_regs.LYC=dat; }
 static void cpu_io_write_46( word adr,byte dat )
-{ 
+{
 		switch(dat>>5){
 		case 0:
 		case 1:
-			_memcpy4x((unsigned long *)oam,(unsigned long *)(get_rom()+dat*256),0xA0/4); 
+			_memcpy4x((unsigned long *)oam,(unsigned long *)(get_rom()+dat*256),0xA0/4);
 			//_memcpy(oam,get_rom()+dat*256,0xA0);
 			break;
 		case 2:
 		case 3:
-			_memcpy4x((unsigned long *)oam,(unsigned long *)(mbc_get_rom()+dat*256),0xA0/4); 
+			_memcpy4x((unsigned long *)oam,(unsigned long *)(mbc_get_rom()+dat*256),0xA0/4);
 			//_memcpy(oam,mbc_get_rom()+dat*256,0xA0);
 			break;
 		case 4:
-			_memcpy4x((unsigned long *)oam,(unsigned long *)(vram_bank+(dat&0x1F)*256),0xA0/4); 
+			_memcpy4x((unsigned long *)oam,(unsigned long *)(vram_bank+(dat&0x1F)*256),0xA0/4);
 			//_memcpy(oam,vram_bank+(dat&0x1F)*256,0xA0);
 			break;
 		case 5:
-			_memcpy4x((unsigned long *)oam,(unsigned long *)(mbc_get_sram()+(dat&0x1F)*256),0xA0/4); 
+			_memcpy4x((unsigned long *)oam,(unsigned long *)(mbc_get_sram()+(dat&0x1F)*256),0xA0/4);
 			//_memcpy(oam,mbc_get_sram()+(dat&0x1F)*256,0xA0);
 			break;
 		case 6:
 			if (dat&0x10)
-				_memcpy4x((unsigned long *)oam,(unsigned long *)(ram_bank+(dat&0x0F)*256),0xA0/4); 
+				_memcpy4x((unsigned long *)oam,(unsigned long *)(ram_bank+(dat&0x0F)*256),0xA0/4);
 			//_memcpy(oam,ram_bank+(dat&0x0F)*256,0xA0);
 			else
-				_memcpy4x((unsigned long *)oam,(unsigned long *)(ram+(dat&0x0F)*256),0xA0/4); 
+				_memcpy4x((unsigned long *)oam,(unsigned long *)(ram+(dat&0x0F)*256),0xA0/4);
 			//_memcpy(oam,ram+(dat&0x0F)*256,0xA0);
 			break;
 		case 7:
 			if (dat<0xF2){
 				if (dat&0x10)
-					_memcpy4x((unsigned long *)oam,(unsigned long *)(ram_bank+(dat&0x0F)*256),0xA0/4); 
+					_memcpy4x((unsigned long *)oam,(unsigned long *)(ram_bank+(dat&0x0F)*256),0xA0/4);
 				//_memcpy(oam,ram_bank+(dat&0x0F)*256,0xA0);
 				else
-					_memcpy4x((unsigned long *)oam,(unsigned long *)(ram+(dat&0x0F)*256),0xA0/4); 
+					_memcpy4x((unsigned long *)oam,(unsigned long *)(ram+(dat&0x0F)*256),0xA0/4);
 				//_memcpy(oam,ram+(dat&0x0F)*256,0xA0);
 			}
 			break;
@@ -684,7 +684,7 @@ static void cpu_io_write_4C( word adr,byte dat ){ ; }
 static void cpu_io_write_4D( word adr,byte dat ){ cg_regs.KEY1=dat&1; speed_change=dat&1; }
 static void cpu_io_write_4E( word adr,byte dat ){ ; }
 static void cpu_io_write_4F( word adr,byte dat )
-{ 
+{
 		if (dma_executing)
 			return;
 		vram_bank=vram+0x2000*(dat&0x01);
@@ -696,7 +696,7 @@ static void cpu_io_write_52( word adr,byte dat ){ dma_src&=0xFF00; dma_src|=(dat
 static void cpu_io_write_53( word adr,byte dat ){ dma_dest&=0x00F0; dma_dest|=((dat&0xFF)<<8); }
 static void cpu_io_write_54( word adr,byte dat ){ dma_dest&=0xFF00; dma_dest|=(dat&0xF0); }
 static void cpu_io_write_55( word adr,byte dat )
-{ 
+{
 		word tmp_adr=0x8000+(dma_dest&0x1ff0);
 //			fprintf(file,"%03d : %04X -> %04X  %d byte %s\n",g_regs.LY,dma_src,dma_dest,((dat&0x7f)+1)*16,(dat&0x80)?"delay":"immidiately");
 		if ((dma_src>=0x8000&&dma_src<0xA000)||(dma_src>=0xE000)||(!(tmp_adr>=0x8000&&tmp_adr<0xA000))){
@@ -820,7 +820,7 @@ static void cpu_io_write_67( word adr,byte dat ){ ; }
 
 static void cpu_io_write_68( word adr,byte dat ){ cg_regs.BCPS=dat; }
 static void cpu_io_write_69( word adr,byte dat )
-{ 
+{
 		if (cg_regs.BCPS&1){
 			lcd_get_pal((cg_regs.BCPS>>3)&7)[(cg_regs.BCPS>>1)&3]=
 			(lcd_get_pal((cg_regs.BCPS>>3)&7)[(cg_regs.BCPS>>1)&3]&0xff)|(dat<<8);
@@ -845,7 +845,7 @@ static void cpu_io_write_69( word adr,byte dat )
 }
 static void cpu_io_write_6A( word adr,byte dat ){ cg_regs.OCPS=dat; }
 static void cpu_io_write_6B( word adr,byte dat )
-{ 
+{
 		if (cg_regs.OCPS&1){
 			lcd_get_pal(((cg_regs.OCPS>>3)&7)+8)[(cg_regs.OCPS>>1)&3]=
 			(lcd_get_pal(((cg_regs.OCPS>>3)&7)+8)[(cg_regs.OCPS>>1)&3]&0xff)|(dat<<8);
@@ -872,7 +872,7 @@ static void cpu_io_write_6D( word adr,byte dat ){ ; }
 static void cpu_io_write_6E( word adr,byte dat ){ ; }
 static void cpu_io_write_6F( word adr,byte dat ){ ; }
 static void cpu_io_write_70( word adr,byte dat )
-{ 
+{
 //			if (dma_executing)
 //				return;
 
@@ -1029,14 +1029,14 @@ static void cpu_io_write_FE( word adr,byte dat ){ ; }
 */
 
 static void cpu_io_write_FF( word adr,byte dat )
-{ 
+{
 		g_regs.IE=dat;
 //			g_regs.IF=0;
 //			fprintf(file,"IE = %02X\n",dat);
 		cpu_irq_check();
 }
 
-void (*cpu_io_write_JmpTbl[256])(word adr,byte dat) = 
+void (*cpu_io_write_JmpTbl[256])(word adr,byte dat) =
 {
 cpu_io_write_00,cpu_io_write_01,cpu_io_write_02,cpu_io_write_03,
 cpu_io_write_04,cpu_io_write_05,cpu_io_write_06,cpu_io_write_07,

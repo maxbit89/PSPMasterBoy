@@ -63,7 +63,7 @@ char rom_load_rom(byte *buf,int size,byte *ram,int ram_size)
 //		free(dat);
 //		free(sram);
 //	}
-	
+
 	memcpy(info.cart_name,buf+0x134,16);
 	info.cart_name[16]='\0';
 	info.cart_name[17]='\0';
@@ -74,9 +74,9 @@ char rom_load_rom(byte *buf,int size,byte *ram,int ram_size)
 	if (memcmp(info.cart_name,momocol_title,16)==0){
 		info.cart_type=0x100;//mmm01
 	}
-	
+
 	byte tmp=buf[0x143];
-	
+
 	info.gb_type=(tmp&0x80)?3:(buf[0x146]==0x03)?2:1;
 	sgb_mode = (buf[0x146]==0x03)?1:0;
 	if(buf[0x143]&0x80)
@@ -85,7 +85,7 @@ char rom_load_rom(byte *buf,int size,byte *ram,int ram_size)
 		org_gbtype = 2;
 	else
 		org_gbtype = 1;
-	
+
 	if (info.rom_size>8)
 		return false;
 
@@ -100,9 +100,9 @@ char rom_load_rom(byte *buf,int size,byte *ram,int ram_size)
 //	else
 //		memset(sram,0x00,rom_get_sram_size());
 	sram = ram;
-	
+
 	b_loaded=true;
-	
+
 	return true;
 }
 

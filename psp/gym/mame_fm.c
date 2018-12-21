@@ -110,7 +110,7 @@
 #else
 #define INLINE
 #endif
-#define YM2612UpdateRequest(x) 
+#define YM2612UpdateRequest(x)
 #define AY8910_set_clock(chip,clock)
 #define logerror
 #define state_save_register_UINT8(mod, ins, name, val, size)

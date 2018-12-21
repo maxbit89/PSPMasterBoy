@@ -63,22 +63,22 @@ enum {
 /* SMS context */
 typedef struct
 {
-    uint8_t wram[0x2000];
-    uint8_t paused;
-    uint8_t save;
-    uint8_t territory;
-    uint8_t console;
-    uint8_t display;
-    uint8_t fm_detect;
-    uint8_t use_fm;
-    uint8_t memctrl;
-    uint8_t ioctrl;
+    uint8 wram[0x2000];
+    uint8 paused;
+    uint8 save;
+    uint8 territory;
+    uint8 console;
+    uint8 display;
+    uint8 fm_detect;
+    uint8 use_fm;
+    uint8 memctrl;
+    uint8 ioctrl;
     struct {
-    	uint8_t pdr;      /* Parallel data register */
-    	uint8_t ddr;      /* Data direction register */
-    	uint8_t txdata;   /* Transmit data buffer */
-    	uint8_t rxdata;   /* Receive data buffer */
-    	uint8_t sctrl;    /* Serial mode control and status */
+        uint8 pdr;      /* Parallel data register */
+        uint8 ddr;      /* Data direction register */
+        uint8 txdata;   /* Transmit data buffer */
+        uint8 rxdata;   /* Receive data buffer */
+        uint8 sctrl;    /* Serial mode control and status */
     } sio;
     struct {
         int type;
@@ -88,8 +88,8 @@ typedef struct
 /* Global data */
 extern sms_t sms;
 
-extern uint8_t dummy_write[0x400];
-extern uint8_t dummy_read[0x400];
+extern uint8 dummy_write[0x400];
+extern uint8 dummy_read[0x400];
 
 /* Function prototypes */
 void sms_init(void);

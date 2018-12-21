@@ -39,3 +39,18 @@ void error(char *format, ...)
 #endif
 }
 
+void dbg(char *format, ...)
+{
+    char buffer[4096];
+    va_list ap;
+    va_start(ap, format);
+    vsnprintf(buffer, 4096, format, ap);
+    sceIoWrite(sceKernelStdout(), buffer, 4096);
+    va_end(ap);
+}
+
+void trap(char *file, int line)
+{
+    dbg("TRAP: %s:%d", file, line);
+}
+

@@ -19,7 +19,7 @@
 #define INPUT_BUTTON2       0x00000010
 
 /* These can be used for 'input.system' */
-#define INPUT_START         0x00000001  /* Game Gear only */    
+#define INPUT_START         0x00000001  /* Game Gear only */
 #define INPUT_PAUSE         0x00000002  /* Master System only */
 #define INPUT_RESET         0x00000004  /* Master System only */
 
@@ -32,21 +32,21 @@ enum {
 /* User input structure */
 typedef struct
 {
-    uint32_t pad[2];
-    uint8_t analog[2];
-    uint32_t system;
+    uint32 pad[2];
+    uint8 analog[2];
+    uint32 system;
 } input_t;
 
 /* Game image structure */
 typedef struct
 {
-    uint8_t *rom;
-    uint8_t pages;
-    uint32_t crc;
-    uint32_t sram_crc;
+    uint8 *rom;
+    uint8 pages;
+    uint32 crc;
+    uint32 sram_crc;
     int mapper;
-    uint8_t sram[0x8000];
-    uint8_t fcr[4];
+    uint8 sram[0x8000];
+    uint8 fcr[4];
 } cart_t;
 
 /* Bitmap structure */
@@ -62,12 +62,12 @@ typedef struct
         int x, y, w, h;
         int ox, oy, ow, oh;
         int changed;
-    } viewport;        
+    } viewport;
     struct
     {
-        uint8_t color[PALETTE_SIZE][3];
-        uint8_t dirty[PALETTE_SIZE];
-        uint8_t update;
+        uint8 color[PALETTE_SIZE][3];
+        uint8 dirty[PALETTE_SIZE];
+        uint8 update;
     }pal;
 } bitmap_t;
 
@@ -81,7 +81,7 @@ void system_frame(int skip_render);
 void system_init(void);
 void system_shutdown(void);
 void system_reset(int reloadsram);
-void system_manage_sram(uint8_t *sram, int slot, int mode);
+void system_manage_sram(uint8 *sram, int slot, int mode);
 void system_poweron(void);
 //void system_poweroff(void);
 

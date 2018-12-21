@@ -92,7 +92,7 @@ void mbc_reset(void)
 
 	if (rom_get_info()->cart_type==0xFD)
 		ext_is_ram=false;
-	
+
 	mbc_set_write();
 }
 

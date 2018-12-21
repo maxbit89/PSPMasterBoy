@@ -260,10 +260,10 @@ enum {ACTION_DRAW, ACTION_HANDLE};
 enum {EVENT_INIT, EVENT_SET, EVENT_SELECT, EVENT_CANCEL, EVENT_DRAW, EVENT_HANDLE, EVENT_DEFAULT};
 enum {MENUUPD_FILE=1, MENUUPD_VIDEO=2, MENUUPD_SOUND=4, MENUUPD_CTRL=8, MENUUPD_MISC=16,
 		MENUUPD_ALL=31};
-enum { 
-    PSP_FILE_TYPE_DIR=0x10, 
-    PSP_FILE_TYPE_FILE=0x20 
-}; 
+enum {
+    PSP_FILE_TYPE_DIR=0x10,
+    PSP_FILE_TYPE_FILE=0x20
+};
 enum {EXT_UNKNOWN, EXT_DIR, EXT_ZIP, EXT_SMS, EXT_GG, EXT_GB};
 
 extern int ShowChoiceMsgBox(char *msg, char *title, int buttons, int width, char *elements[], int nbElements, int blocking);

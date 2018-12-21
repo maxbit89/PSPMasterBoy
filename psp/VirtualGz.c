@@ -18,7 +18,7 @@ int vfsGzFileOpen(void *param1, int param2, int type, int mode, VIRTUAL_FILE* f)
 		stdMode = "w";
 	else // if (mode == VF_O_READWRITE)
 		return 0;
-	
+
 	f->ioPtr = (void*)gzopen((char*)param1, stdMode);
 	if (mode == VF_O_WRITE && !f->ioPtr)		{
 		//Create the path if it doesn't exist

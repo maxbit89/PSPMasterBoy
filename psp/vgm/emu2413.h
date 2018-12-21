@@ -27,7 +27,7 @@ typedef struct __EMU2413_OPLL_PATCH {
 /* slot */
 typedef struct __EMU2413_OPLL_SLOT {
 
-  EMU2413_OPLL_PATCH *patch;  
+  EMU2413_OPLL_PATCH *patch;
 
   e_int32 type ;          /* 0 : modulator 1 : carrier */
 
@@ -80,7 +80,7 @@ typedef struct __OPLL {
 #endif
 
   /* Register */
-  e_uint8 reg[0x40] ; 
+  e_uint8 reg[0x40] ;
   e_int32 slot_on_flag[18] ;
 
   /* Pitch Modulator */
